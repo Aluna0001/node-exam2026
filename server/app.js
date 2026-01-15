@@ -1,9 +1,11 @@
-import express from 'express';
+import express from 'express'
 
-const app = express();
+const app = express()
 
-const PORT = 8080;
+app.use(express.static('./../client/dist'))
+
+const PORT = 8080
 
 app.listen(PORT, () => {
-    console.log('Server is running in port:', PORT )
-});
+  console.log('Server is running in port:', PORT)
+})
