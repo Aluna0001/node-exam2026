@@ -58,4 +58,18 @@ router.post('/auth/logout', (req, res) => {
   })
 })
 
+router.get('/auth/status', (req, res) => {
+  if (req.session.userId) {
+    return res.send({
+      isAuthenticated: true,
+      user: {
+        id: req.session.userId,
+        username: req.session.username,
+        role: req.session.role
+      }
+    })
+  }
+  res.send({ isAuthenticated: false })
+})
+
 export default router
