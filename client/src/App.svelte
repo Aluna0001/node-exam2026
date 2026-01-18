@@ -1,1 +1,6 @@
-<h1>HEEEEj</h1>
+<script>
+  import LoginForm from './components/LoginForm.svelte';
+    import loginForm from './components/LoginForm.svelte'
+</script>
+
+<LoginForm />
