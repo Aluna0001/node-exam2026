@@ -18,6 +18,7 @@ router.post('/auth/login', async (req, res) => {
       'SELECT * FROM users WHERE username = ?',
       username
     )
+    console.log(user)
 
     if (!user) {
       return res.status(401).send({ error: 'Invalid username or password' })
