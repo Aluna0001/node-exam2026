@@ -20,8 +20,20 @@
 <h1>Login</h1>
 
 <form onsubmit={handleLogin}>
-  <input type="text" placeholder="Username" bind:value={username} required />
-  <input type="password" placeholder="Password" bind:value={password} required />
+  <input 
+    type="text" 
+    placeholder="Username" 
+    bind:value={username} 
+    autocomplete="username"
+    required 
+  />
+  <input 
+    type="password" 
+    placeholder="Password" 
+    bind:value={password} 
+    autocomplete="current-password"
+    required 
+  />
   <button type="submit">Login</button>
 </form>
 
