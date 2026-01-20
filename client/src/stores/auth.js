@@ -1,16 +1,16 @@
 import { writable } from 'svelte/store'
 
-export const user = writable(null)
+export const account = writable(null)
 
 export const isAuthenticated = writable(false)
 
-export function setUser (userData) {
-  user.set(userData)
+export function setAccount (accountData) {
+  account.set(accountData)
   isAuthenticated.set(true)
 }
 
-export function clearUser () {
-  user.set(null)
+export function clearAccount () {
+  account.set(null)
   isAuthenticated.set(false)
 }
 

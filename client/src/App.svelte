@@ -1,8 +1,13 @@
 <script>
-  import LoginForm from './components/LoginForm.svelte';
-    import loginForm from './components/LoginForm.svelte'
+  import { account } from './stores/auth.js'
+  import LoginForm from './components/LoginForm.svelte'
+  import Dashboard from './pages/Dashboard.svelte'
 </script>
 
-<LoginForm />
+{#if $account}
+  <Dashboard />
+{:else}
+  <LoginForm />
+{/if}
 
 <!-- Routers -->

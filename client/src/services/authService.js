@@ -1,5 +1,5 @@
 import { fetchGet, fetchRequestJson } from '../utils/fetch.js'
-import { setUser, clearUser } from '../stores/auth.js'
+import { setAccount, clearAccount } from '../stores/auth.js'
 import { navigate } from 'svelte-routing'
 
 export async function login (username, password) {
@@ -15,14 +15,14 @@ export async function login (username, password) {
   }
 
   const data = await response.json()
-  setUser(data.user)
+  setAccount(data.user)
   navigate('/dashboard')
   return { success: true }
 }
 
 export async function logout () {
   const response = await fetchRequestJson('/auth/logout', {}, 'POST')
-  clearUser()
+  clearAccount()
   navigate('/login')
   return response
 }
@@ -31,9 +31,9 @@ export async function checkAuthStatus () {
   const data = await fetchGet('/auth/status')
 
   if (data?.isAuthenticated) {
-    setUser(data.user)
+    setAccount(data.user)
   } else {
-    clearUser()
+    clearAccount()
   }
 
   return data
