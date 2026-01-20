@@ -1,5 +1,6 @@
 <script>
   import { login } from '../services/authService'
+  import toastr from 'toastr'
 
   let username = $state('')
   let password = $state('')
@@ -10,9 +11,9 @@
     const result = await login(username, password)
 
     if (result.error) {
-      console.error('Login failed:', result.error)
+      toastr.error(result.error)
     } else {
-      console.log('Login success', result)
+      toastr.success('Login successful!')
     }
   }
 </script>
