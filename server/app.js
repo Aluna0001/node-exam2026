@@ -7,6 +7,9 @@ import { generalLimiter, authLimiter } from './middleware/rateLimiters.js'
 
 import authRoutes from './routes/authRoutes.js'
 
+import tarotRoutes from "./routes/tarotRoutes.js";
+app.use(tarotRoutes);
+
 const app = express()
 
 app.use(express.json())
