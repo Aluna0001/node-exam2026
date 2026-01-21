@@ -18,3 +18,5 @@ Chat with a spiritual guide – Real-time messaging
 Daily energy updates – Push notifications with today’s horoscope
 
 Group meditation sessions – Users can see who is online and meditating
+
+Seperate files with different features
