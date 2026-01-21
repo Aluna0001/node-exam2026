@@ -6,9 +6,7 @@ import { sessionMiddleware } from './middleware/sessionConfig.js'
 import { generalLimiter, authLimiter } from './middleware/rateLimiters.js'
 
 import authRoutes from './routes/authRoutes.js'
-
 import tarotRoutes from "./routes/tarotRoutes.js";
-app.use(tarotRoutes);
 
 const app = express()
 
@@ -32,6 +30,7 @@ app.use("/images", express.static("./public/images"));
 
 app.use('/auth', authLimiter)
 app.use(authRoutes)
+app.use(tarotRoutes)
 
 app.use(express.static('./../client/dist'))
 
