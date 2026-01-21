@@ -20,3 +20,5 @@ Daily energy updates – Push notifications with today’s horoscope
 Group meditation sessions – Users can see who is online and meditating
 
 Seperate files with different features
+
+License: Tarot card are Downloaded legally from pixabay.

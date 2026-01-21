@@ -27,6 +27,9 @@ app.use(sessionMiddleware)
 
 app.use(generalLimiter)
 
+// Static files after security, but before routes
+app.use("/images", express.static("./public/images"));
+
 app.use('/auth', authLimiter)
 app.use(authRoutes)
 
