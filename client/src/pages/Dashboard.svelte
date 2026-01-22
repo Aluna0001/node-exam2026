@@ -1,6 +1,9 @@
 <script>
   import { account } from '../stores/auth.js'
   import { logout } from '../services/authService.js'
+  import TarotPage from './TarotPage.svelte'
+
+  let currentPage = $state('home')
 </script>
 
 <div class="dashboard">
@@ -13,7 +16,7 @@
     <aside class="left-sidebar">
       <h3>MAIN FUNCTIONS</h3>
       <nav>
-        <button>Tarot Cards</button>
+        <button onclick={() => currentPage = 'tarot'}>Tarot Cards</button>
         <button>Zodiac Signs</button>
         <button>Palm Reading</button>
       </nav>
@@ -27,27 +30,31 @@
     </aside>
 
     <main class="content">
-      <h1>Welcome to The Mystical Portal</h1>
-      <p>Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
-      
-      <div class="cards">
-        <div class="card">
-          <div class="icon">⭐</div>
-          <h3>Tarot</h3>
-          <p>Let the cards show the way</p>
-        </div>
-        <div class="card">
-          <div class="icon">🌙</div>
-          <h3>Zodiac</h3>
-          <p>Experience cosmic wisdom</p>
-        </div>
-        <div class="card">
-          <div class="icon">✨</div>
-          <h3>Palm Reading</h3>
-          <p>Read your destiny</p>
-        </div>
+  {#if currentPage === 'home'}
+    <h1>Welcome to The Mystical Portal</h1>
+    <p>Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
+  
+    <div class="cards">
+      <div class="card">
+        <div class="icon">⭐</div>
+        <h3>Tarot</h3>
+        <p>Let the cards show the way</p>
       </div>
-    </main>
+      <div class="card">
+        <div class="icon">🌙</div>
+        <h3>Zodiac</h3>
+        <p>Experience cosmic wisdom</p>
+      </div>
+      <div class="card">
+        <div class="icon">✨</div>
+        <h3>Palm Reading</h3>
+        <p>Read your destiny</p>
+      </div>
+    </div>
+  {:else if currentPage === 'tarot'}
+    <TarotPage />
+  {/if}
+</main>
 
     <aside class="right-sidebar">
       <h3>LATEST READINGS</h3>
