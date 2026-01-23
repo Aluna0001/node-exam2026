@@ -2,6 +2,8 @@
   import { account } from './stores/auth.js'
   import Dashboard from './pages/Dashboard.svelte'
   import { login } from './services/authService.js'
+  import { signup } from './services/signupService.js'
+
   import toastr from 'toastr'
 
   let showSignup = $state(false)
@@ -29,22 +31,30 @@
   }
 
   async function handleSignup(event) {
-    event.preventDefault()
-    
-    if (signupPassword !== confirmPassword) {
-      toastr.error('Passwords do not match')
-      return
-    }
-    
-    if (signupPassword.length < 6) {
-      toastr.error('Password must be at least 6 characters')
-      return
-    }
-    
-    loading = true
-    console.log('Signing up:', signupUsername, signupEmail)
-    loading = false
+  event.preventDefault()
+  
+  if (signupPassword !== confirmPassword) {
+    toastr.error('Passwords do not match')
+    return
   }
+  
+  if (signupPassword.length < 6) {
+    toastr.error('Password must be at least 6 characters')
+    return
+  }
+  
+  loading = true
+  
+  const result = await signup(signupUsername, signupEmail, signupPassword)
+  
+  if (result.error) {
+    toastr.error(result.error)
+  } else {
+    toastr.success('Account created! Welcome!')
+  }
+  
+  loading = false
+}
 </script>
 
 {#if $account}
