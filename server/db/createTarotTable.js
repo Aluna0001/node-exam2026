@@ -10,7 +10,7 @@ db.exec(`
   )
 `)
 
-// Test cards
+// Cards
 db.run(`
   INSERT OR IGNORE INTO tarot_cards (id, name, image_url, base_meaning) VALUES
   (1, 'The Fool', '/images/tarot/fool.jpg', 'New beginnings, innocence, spontaneity, free spirit'),
