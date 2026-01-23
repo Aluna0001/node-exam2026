@@ -1,14 +1,20 @@
 <script>
   import { account } from '../stores/auth.js'
   import { logout } from '../services/authService.js'
+  import { setContext } from 'svelte'
   import TarotPage from './TarotPage.svelte'
 
   let currentPage = $state('home')
+  
+  function navigate(page) {
+    currentPage = page
+  }
+
 </script>
 
 <div class="dashboard">
   <header class="top-header">
-    <div class="logo">✨ Mystical Portal</div>
+    <button class="logo" onclick={() => navigate('home')}>✨ Mystical Portal</button>
     <button class="logout-btn" onclick={logout}>Log out</button>
   </header>
 
@@ -90,9 +96,18 @@
   }
 
   .logo {
-    font-size: 24px;
-    font-weight: bold;
-  }
+  font-size: 24px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  color: #d4af37;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
 
   .logout-btn {
     padding: 10px 20px;
