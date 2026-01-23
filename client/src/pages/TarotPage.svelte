@@ -1,7 +1,6 @@
 <script>
-    import { drawTarotCard } from '../services/tarotService.js'
-    import toastr from 'toastr'
-
+  import { drawTarotCard } from '../services/tarotService.js'
+  import toastr from 'toastr'
 
   let question = $state('')
   let card = $state(null)
@@ -51,15 +50,16 @@
 
   {#if card && interpretation}
     <div class="result">
-      <div class="card-display">
-        <img src={`http://localhost:8080${card.imageUrl}`} alt={card.name} />
-        <h2>{card.name}</h2>
-        <p class="base-meaning">{card.baseMeaning}</p>
-      </div>
+      <h2>{card.name}</h2>
+      <p class="base-meaning">{card.baseMeaning}</p>
 
-      <div class="interpretation">
-        <h3>Your Reading</h3>
-        <p>{interpretation}</p>
+      <div class="reading-layout">
+        <img src={`http://localhost:8080${card.imageUrl}`} alt={card.name} />
+        
+        <div class="interpretation">
+          <h3>Your Reading</h3>
+          <p>{interpretation}</p>
+        </div>
       </div>
 
       <button class="draw-again" onclick={() => { card = null; interpretation = null; question = '' }}>
@@ -131,33 +131,42 @@
     margin-top: 40px;
   }
 
-  .card-display {
+  .result h2 {
     text-align: center;
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .base-meaning {
+    text-align: center;
+    color: #888;
+    font-style: italic;
     margin-bottom: 30px;
   }
 
-  .card-display img {
-    max-width: 300px;
+  .reading-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .reading-layout img {
+    width: 200px;
+    height: 320px;
+    object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
   }
 
-  .card-display h2 {
-    margin: 20px 0 10px;
-    font-size: 32px;
-  }
-
-  .base-meaning {
-    color: #888;
-    font-style: italic;
-  }
-
   .interpretation {
+    width: 100%;
+    max-width: 700px;
     background: rgba(212, 175, 55, 0.05);
     border: 1px solid #333;
     border-radius: 12px;
     padding: 30px;
-    margin: 20px 0;
   }
 
   .interpretation h3 {
@@ -168,6 +177,7 @@
   .interpretation p {
     line-height: 1.8;
     text-align: left;
+    color: #d4af37;
   }
 
   .draw-again {
