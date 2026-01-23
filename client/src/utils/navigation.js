@@ -1,10 +1,10 @@
 import toastr from 'toastr'
 import { get } from 'svelte/store'
 import { navigate } from 'svelte-routing'
-import { user } from '../stores/auth.js'
+import { account } from '../stores/auth.js'
 
 export function goToDashboard () {
-  const currentUser = get(user)
+  const currentUser = get(account)
   if (!currentUser) {
     console.error('You must be logged in to access the dashboard')
     navigate('/login')
