@@ -7,6 +7,10 @@
   let showSignup = $state(false)
   let username = $state('')
   let password = $state('')
+  let signupUsername = $state('')
+  let signupEmail = $state('')
+  let signupPassword = $state('')
+  let confirmPassword = $state('')
   let loading = $state(false)
 
   async function handleLogin(event) {
@@ -23,6 +27,24 @@
 
     loading = false
   }
+
+  async function handleSignup(event) {
+    event.preventDefault()
+    
+    if (signupPassword !== confirmPassword) {
+      toastr.error('Passwords do not match')
+      return
+    }
+    
+    if (signupPassword.length < 6) {
+      toastr.error('Password must be at least 6 characters')
+      return
+    }
+    
+    loading = true
+    console.log('Signing up:', signupUsername, signupEmail)
+    loading = false
+  }
 </script>
 
 {#if $account}
@@ -32,33 +54,73 @@
     <h1>THE PORTAL</h1>
     <p class="subtitle">Step into the unknown</p>
 
-    <div class="auth-box">
-      <h2>Log in</h2>
-      
-      <form onsubmit={handleLogin}>
-        <input 
-          type="text" 
-          placeholder="Username" 
-          bind:value={username}
-          required 
-        />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          bind:value={password}
-          required 
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'LOG IN'}
+    {#if !showSignup}
+      <div class="auth-box">
+        <h2>Log in</h2>
+        
+        <form onsubmit={handleLogin}>
+          <input 
+            type="text" 
+            placeholder="Username" 
+            bind:value={username}
+            autocomplete="username"
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            bind:value={password}
+            autocomplete="current-password"
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'LOG IN'}
+          </button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <button class="secondary" onclick={() => showSignup = true}>
+          CREATE ACCOUNT
         </button>
-      </form>
+      </div>
+    {:else}
+      <div class="auth-box">
+        <h2>Create Account</h2>
+        
+        <form onsubmit={handleSignup}>
+          <input 
+            type="text" 
+            placeholder="Username" 
+            bind:value={signupUsername}
+            autocomplete="username"
+          />
+          <input 
+            type="email" 
+            placeholder="Email" 
+            bind:value={signupEmail}
+            autocomplete="email"
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            bind:value={signupPassword}
+            autocomplete="new-password"
+          />
+          <input 
+            type="password" 
+            placeholder="Confirm Password" 
+            bind:value={confirmPassword}
+            autocomplete="new-password"
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? 'Creating Account...' : 'SIGN UP'}
+          </button>
+        </form>
 
-      <div class="divider">or</div>
-
-      <button class="secondary" onclick={() => showSignup = true}>
-        CREATE ACCOUNT
-      </button>
-    </div>
+        <button class="secondary" onclick={() => showSignup = false}>
+          Back to Login
+        </button>
+      </div>
+    {/if}
   </div>
 {/if}
 
@@ -166,14 +228,14 @@
   }
 
   .secondary {
-    width: 100%;
-    background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
-  }
+  width: 100%;
+  background: transparent;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  margin-top: 15px;
+}
 
   .secondary:hover {
     background: rgba(212, 175, 55, 0.1);
   }
 </style>
-<!-- Routers -->
