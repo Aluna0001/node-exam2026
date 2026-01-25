@@ -28,7 +28,6 @@ app.use(sessionMiddleware);
 
 app.use(generalLimiter);
 
-// Static files after security, but before route
 app.use("/images", express.static("./public/images"));
 
 app.use("/auth", authLimiter);
@@ -53,11 +52,33 @@ const io = new Server(httpServer, {
   },
 });
 
+io.engine.use(sessionMiddleware);
+
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
+  const session = socket.request.session;
+  const username =
+    socket.handshake.auth.username || session?.username || "anonymous";
+
+  console.log("User connected:", username, socket.id);
+
+  socket.username = username;
+
+  io.emit("user-joined", { username });
+
+  socket.on("chat-message", (data) => {
+    console.log("Chat message from", username, ":", data.text);
+
+    io.emit("new-message", {
+      username: username,
+      text: data.text,
+      timestamp: new Date().toISOString(),
+    });
+  });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
+    console.log("User disconnected:", username || "anonymous", socket.id);
+
+    io.emit("user-left", { username });
   });
 });
 

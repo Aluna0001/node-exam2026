@@ -3,7 +3,8 @@
   import Dashboard from './pages/Dashboard.svelte'
   import { login } from './services/authService.js'
   import { signup } from './services/signupService.js'
-
+  import { connectSocket, disconnectSocket } from './services/socketService.js'
+  import { onMount, onDestroy } from 'svelte'
   import toastr from 'toastr'
 
   let showSignup = $state(false)
@@ -15,6 +16,16 @@
   let confirmPassword = $state('')
   let loading = $state(false)
 
+  onMount(() => {
+    if ($account) {
+      connectSocket()
+    }
+  })
+
+  onDestroy(() => {
+    disconnectSocket()
+  })
+
   async function handleLogin(event) {
     event.preventDefault()
     loading = true
@@ -25,36 +36,38 @@
       toastr.error(result.error)
     } else {
       toastr.success('Login successful!')
+      connectSocket()
     }
 
     loading = false
   }
 
   async function handleSignup(event) {
-  event.preventDefault()
-  
-  if (signupPassword !== confirmPassword) {
-    toastr.error('Passwords do not match')
-    return
+    event.preventDefault()
+    
+    if (signupPassword !== confirmPassword) {
+      toastr.error('Passwords do not match')
+      return
+    }
+    
+    if (signupPassword.length < 6) {
+      toastr.error('Password must be at least 6 characters')
+      return
+    }
+    
+    loading = true
+    
+    const result = await signup(signupUsername, signupEmail, signupPassword)
+    
+    if (result.error) {
+      toastr.error(result.error)
+    } else {
+      toastr.success('Account created! Welcome!')
+      connectSocket()
+    }
+    
+    loading = false
   }
-  
-  if (signupPassword.length < 6) {
-    toastr.error('Password must be at least 6 characters')
-    return
-  }
-  
-  loading = true
-  
-  const result = await signup(signupUsername, signupEmail, signupPassword)
-  
-  if (result.error) {
-    toastr.error(result.error)
-  } else {
-    toastr.success('Account created! Welcome!')
-  }
-  
-  loading = false
-}
 </script>
 
 {#if $account}
@@ -238,12 +251,12 @@
   }
 
   .secondary {
-  width: 100%;
-  background: transparent;
-  border: 1px solid #d4af37;
-  color: #d4af37;
-  margin-top: 15px;
-}
+    width: 100%;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    margin-top: 15px;
+  }
 
   .secondary:hover {
     background: rgba(212, 175, 55, 0.1);

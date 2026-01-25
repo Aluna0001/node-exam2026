@@ -1,5 +1,6 @@
 <script>
   import { account } from '../stores/auth.js'
+  import Chat from './Chat.svelte'
 </script>
 
 <aside class="right-sidebar">
@@ -10,6 +11,8 @@
     <p class="info">Birthdate: Not set</p>
     <p class="info">Zodiac: Unknown</p>
   </div>
+
+  <Chat />
 
   <h3>LATEST READINGS</h3>
   <div class="reading">
