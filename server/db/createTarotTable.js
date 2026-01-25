@@ -35,6 +35,6 @@ db.run(`
   (20, 'The Sun', '/images/tarot/sun.jpg', 'Positivity, fun, warmth, success, vitality'),
   (21, 'Judgement', '/images/tarot/judgement.jpg', 'Judgement, rebirth, inner calling, absolution'),
   (22, 'The World', '/images/tarot/world.jpg', 'Completion, accomplishment, travel, fulfillment')
-`);
+`)
 
 console.log('Tarot cards table created')
