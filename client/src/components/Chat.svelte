@@ -2,8 +2,15 @@
   import socket from '../services/socketService.js'
   import { account } from '../stores/auth.js'
 
+  let messagesContainer
   let messages = $state([])
   let messageText = $state('')
+
+  $effect(() => {
+    if (messagesContainer && messages.length > 0) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight
+    }
+  })
 
   socket.on('new-message', (data) => {
     messages = [...messages, data]
@@ -34,7 +41,7 @@
 <div class="chat">
   <h3>MYSTICAL CHAT</h3>
   
-  <div class="messages">
+  <div class="messages" bind:this={messagesContainer}>
     {#each messages as msg}
       {#if msg.system}
         <p class="system">{msg.text}</p>
