@@ -47,7 +47,7 @@
         <p class="system">{msg.text}</p>
       {:else}
         <div class="message">
-          <span class="username">{msg.username}:</span>
+          <span class="username" class:owner={msg.role === 'owner'} class:admin={msg.role === 'admin'}>{msg.username}:</span>
           <span class="text">{msg.text}</span>
         </div>
       {/if}
@@ -98,6 +98,14 @@
   .username {
     font-weight: bold;
     margin-right: 5px;
+  }
+
+  .username.owner {
+    color: #9b59b6;
+  }
+
+  .username.admin {
+    color: #ff69b4;
   }
 
   .text {

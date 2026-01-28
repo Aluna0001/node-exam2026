@@ -65,13 +65,17 @@ io.on('connection', (socket) => {
 
   io.emit('user-joined', { username })
 
-  socket.on('chat-message', (data) => {
-    console.log('Chat message from', username, ':', data.text)
+  socket.on("chat-message", (data) => {
+    const session = socket.request.session;
+    const role = session?.role || "user";
 
-    io.emit('new-message', {
-      username,
+    console.log("Chat message from", username, ":", data.text);
+
+    io.emit("new-message", {
+      username: socket.username,
+      role: role,
       text: data.text,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     })
   })
 
