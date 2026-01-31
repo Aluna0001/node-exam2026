@@ -7,6 +7,8 @@
   let interpretation = $state(null)
   let loading = $state(false)
   let error = $state(null)
+  let limitReached = $state(false)
+  let resetTime = $state(null)
 
   async function drawCard() {
     if (!question.trim()) {
@@ -18,16 +20,40 @@
 
     try {
       const result = await drawTarotCard(question)
-      card = result.card
-      interpretation = result.interpretation
-      toastr.success('Card drawn!')
-
-      window.dispatchEvent(new CustomEvent('reading-updated'))
+      
+      if (result.limitReached) {
+        limitReached = true
+        resetTime = result.resetTime
+        toastr.error('Daily limit reached')
+      } else {
+        card = result.card
+        interpretation = result.interpretation
+        toastr.success('Card drawn!')
+        
+        window.dispatchEvent(new CustomEvent('reading-updated'))
+      }
     } catch (error) {
-      toastr.error(error.message)
+      if (error.message.includes('Daily limit')) {
+        limitReached = true
+      } else {
+        toastr.error(error.message)
+      }
     } finally {
       loading = false
     }
+  }
+
+  function getTimeUntilReset() {
+    if (!resetTime) return ''
+    
+    const now = new Date()
+    const reset = new Date(resetTime)
+    const diff = reset.getTime() - now.getTime()
+    
+    const hours = Math.floor(diff / (1000 * 60 * 60))
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+    
+    return `${hours}h ${minutes}m`
   }
 </script>
 
@@ -35,39 +61,57 @@
   <h1>Tarot Card Reading</h1>
   <p>Ask a question and draw a card to receive guidance</p>
 
-  <div class="question-box">
-    <input 
-      type="text" 
-      placeholder="What question weighs on your heart?" 
-      bind:value={question}
-    />
-    <button onclick={drawCard} disabled={loading}>
-      {loading ? 'Drawing...' : 'Draw Card'}
-    </button>
-  </div>
-
-  {#if error}
-    <p class="error">{error}</p>
-  {/if}
-
-  {#if card && interpretation}
-    <div class="result">
-      <h2>{card.name}</h2>
-      <p class="base-meaning">{card.baseMeaning}</p>
-
-      <div class="reading-layout">
-        <img src={`http://localhost:8080${card.imageUrl}`} alt={card.name} />
-        
-        <div class="interpretation">
-          <h3>Your Reading</h3>
-          <p>{interpretation}</p>
-        </div>
-      </div>
-
-      <button class="draw-again" onclick={() => { card = null; interpretation = null; question = '' }}>
-        Draw Another Card
+  {#if limitReached}
+    <div class="limit-reached">
+      <div class="moon-icon">🌙</div>
+      <h2>Daily Limit Reached</h2>
+      <p class="limit-message">
+        You have drawn your 2 cards for today. The tarot requires time for energies 
+        to settle and vibrations to realign. Drawing too many cards in one day can 
+        dilute the spiritual connection and lead to unclear guidance.
+      </p>
+      <p class="reset-info">
+        Your readings will refresh at midnight
+      </p>
+      {#if resetTime}
+        <p class="countdown">Resets in: {getTimeUntilReset()}</p>
+      {/if}
+    </div>
+  {:else}
+    <div class="question-box">
+      <input 
+        type="text" 
+        placeholder="What question weighs on your heart?" 
+        bind:value={question}
+      />
+      <button onclick={drawCard} disabled={loading}>
+        {loading ? 'Drawing...' : 'Draw Card'}
       </button>
     </div>
+
+    {#if error}
+      <p class="error">{error}</p>
+    {/if}
+
+    {#if card && interpretation}
+      <div class="result">
+        <h2>{card.name}</h2>
+        <p class="base-meaning">{card.baseMeaning}</p>
+
+        <div class="reading-layout">
+          <img src={`http://localhost:8080${card.imageUrl}`} alt={card.name} />
+          
+          <div class="interpretation">
+            <h3>Your Reading</h3>
+            <p>{interpretation}</p>
+          </div>
+        </div>
+
+        <button class="draw-again" onclick={() => { card = null; interpretation = null; question = '' }}>
+          Draw Another Card
+        </button>
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -185,5 +229,45 @@
   .draw-again {
     display: block;
     margin: 20px auto 0;
+  }
+
+  .limit-reached {
+    max-width: 600px;
+    margin: 60px auto;
+    text-align: center;
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 60px 40px;
+  }
+
+  .moon-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+
+  .limit-reached h2 {
+    font-size: 32px;
+    color: #d4af37;
+    margin-bottom: 20px;
+  }
+
+  .limit-message {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 30px;
+  }
+
+  .reset-info {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .countdown {
+    font-size: 18px;
+    color: #d4af37;
+    font-weight: bold;
   }
 </style>
