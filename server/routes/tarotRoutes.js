@@ -1,11 +1,13 @@
 import express from 'express'
 import db from '../db/connection.js'
 import { interpretTarotCard } from '../services/aiService.js'
+import { isAuthenticated } from "../middleware/authMiddleware.js";
 
 const router = express.Router()
 
 router.post('/tarot/draw', async (req, res) => {
   const { question } = req.body
+  const userId = req.session.userId
 
   if (!question) {
     return res.status(400).send({ error: 'Question is required' })
@@ -30,6 +32,12 @@ router.post('/tarot/draw', async (req, res) => {
       question
     )
 
+    await db.run(
+      `INSERT INTO readings (user_id, card_id, question, interpretation) 
+       VALUES (?, ?, ?, ?)`,
+      [userId, card.id, question, interpretation],
+    );
+
     res.send({
       card: {
         name: card.name,
@@ -43,5 +51,38 @@ router.post('/tarot/draw', async (req, res) => {
     res.status(500).send({ error: 'Failed to draw card' })
   }
 })
+
+router.get("/tarot/latest", isAuthenticated, async (req, res) => {
+  const userId = req.session.userId;
+
+  try {
+    const reading = await db.get(
+      `
+      SELECT 
+        r.id,
+        r.question,
+        r.interpretation,
+        r.created_at,
+        c.name as card_name,
+        c.image_url as card_image
+      FROM readings r
+      JOIN tarot_cards c ON r.card_id = c.id
+      WHERE r.user_id = ?
+      ORDER BY r.created_at DESC
+      LIMIT 1
+    `,
+      [userId],
+    );
+
+    if (!reading) {
+      return res.send({ reading: null });
+    }
+
+    res.send({ reading });
+  } catch (error) {
+    console.error("Error fetching latest reading:", error);
+    res.status(500).send({ error: "Failed to fetch reading" });
+  }
+});
 
 export default router

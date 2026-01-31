@@ -1,6 +1,7 @@
 <script>
   import { account } from '../stores/auth.js'
   import Chat from './Chat.svelte'
+  import LatestReadingCard from './LatestReadingCard.svelte'
 </script>
 
 <aside class="right-sidebar">
@@ -14,12 +15,8 @@
 
   <Chat />
 
-  <h3>LATEST READINGS</h3>
-  <div class="reading">
-    <p class="type">TAROT</p>
-    <p class="title">The Stars</p>
-    <p class="time">1 day ago</p>
-  </div>
+  <h3>LATEST READING</h3>
+  <LatestReadingCard />
   
   <h3>TODAY'S ENERGY</h3>
   <div class="energy">
@@ -63,30 +60,6 @@
     font-size: 14px;
     color: #666;
     margin: 5px 0;
-  }
-
-  .reading {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 15px 0;
-  }
-
-  .reading .type {
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: #888;
-  }
-
-  .reading .title {
-    font-size: 16px;
-    margin: 8px 0;
-  }
-
-  .reading .time {
-    font-size: 12px;
-    color: #666;
   }
 
   .energy {

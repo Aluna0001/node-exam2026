@@ -21,6 +21,8 @@
       card = result.card
       interpretation = result.interpretation
       toastr.success('Card drawn!')
+
+      window.dispatchEvent(new CustomEvent('reading-updated'))
     } catch (error) {
       toastr.error(error.message)
     } finally {

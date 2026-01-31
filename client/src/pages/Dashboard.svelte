@@ -1,7 +1,9 @@
 <script>
   import { account } from '../stores/auth.js'
   import { logout } from '../services/authService.js'
+  import { setContext } from 'svelte'
   import TarotPage from './TarotPage.svelte'
+  import ReadingDetail from './ReadingDetail.svelte'
   import LeftSidebar from '../components/LeftSidebar.svelte'
   import RightSidebar from '../components/RightSidebar.svelte'
 
@@ -10,6 +12,8 @@
   function navigate(page) {
     currentPage = page
   }
+
+  setContext('navigation', { navigate })
 </script>
 
 <div class="dashboard">
@@ -45,6 +49,8 @@
         </div>
       {:else if currentPage === 'tarot'}
         <TarotPage />
+      {:else if currentPage === 'reading'}
+        <ReadingDetail />
       {/if}
     </main>
 
