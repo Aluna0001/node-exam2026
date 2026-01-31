@@ -43,6 +43,10 @@ router.put("/profile/update", isAuthenticated, async (req, res) => {
 
     const zodiacSign = getZodiacSign(updatedUser.birthdate);
 
+    req.session.user = updatedUser;
+    req.session.birthdate = updatedUser.birthdate;
+    req.session.show_zodiac = updatedUser.show_zodiac;
+
     res.send({ user: updatedUser, zodiacSign });
   } catch (error) {
     console.error("Profile update error:", error);
