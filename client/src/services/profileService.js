@@ -34,3 +34,16 @@ export async function updateProfile(
 
   return { success: true, user: userWithZodiac };
 }
+
+export async function deleteAccount() {
+  const response = await fetchRequestJson("/profile/delete", {}, "DELETE");
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.error || "Failed to delete account" };
+  }
+
+  setAccount(null);
+
+  return { success: true };
+}

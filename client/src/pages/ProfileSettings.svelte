@@ -1,6 +1,6 @@
 <script>
   import { account } from '../stores/auth.js'
-  import { updateProfile } from '../services/profileService.js'
+  import { updateProfile, deleteAccount } from '../services/profileService.js'
   import toastr from 'toastr'
 
   let currentPassword = $state('')
@@ -9,6 +9,7 @@
   let birthdate = $state($account.birthdate || '')
   let showZodiac = $state($account.show_zodiac === 1)
   let loading = $state(false)
+  let showDeleteConfirm = $state(false)
 
   async function handleSave() {
     if (newPassword && newPassword !== confirmPassword) {
@@ -40,6 +41,17 @@
     }
 
     loading = false
+  }
+
+  async function handleDeleteAccount() {
+    const result = await deleteAccount()
+    
+    if (result.error) {
+      toastr.error(result.error)
+    } else {
+      toastr.success('Account deleted')
+      window.location.href = '/'
+    }
   }
 </script>
 
@@ -104,6 +116,27 @@
   <button class="save-btn" onclick={handleSave} disabled={loading}>
     {loading ? 'Saving...' : 'Save Changes'}
   </button>
+
+  <div class="danger-zone">
+  <h3>Danger Zone</h3>
+  <p>Once you delete your account, there is no going back.</p>
+  
+  {#if !showDeleteConfirm}
+    <button class="delete-btn" onclick={() => showDeleteConfirm = true}>
+      Delete Account
+    </button>
+  {:else}
+    <p class="confirm-text">Are you sure? This cannot be undone!</p>
+    <div class="confirm-buttons">
+      <button class="delete-confirm-btn" onclick={handleDeleteAccount}>
+        Yes, Delete My Account
+      </button>
+      <button class="cancel-btn" onclick={() => showDeleteConfirm = false}>
+        Cancel
+      </button>
+    </div>
+  {/if}
+</div>
 </div>
 
 <style>
@@ -233,4 +266,70 @@
   .save-btn:hover:not(:disabled) {
     background-color: #f4d03f;
   }
+
+  .danger-zone {
+  margin-top: 40px;
+  padding: 30px;
+  border: 2px solid #dc3545;
+  border-radius: 12px;
+  background: rgba(220, 53, 69, 0.05);
+}
+
+.danger-zone h3 {
+  color: #dc3545;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.danger-zone p {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.delete-btn {
+  width: 100%;
+  padding: 15px;
+  background: transparent;
+  border: 2px solid #dc3545;
+  color: #dc3545;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn:hover {
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.confirm-text {
+  color: #dc3545;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.confirm-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-confirm-btn {
+  flex: 1;
+  padding: 15px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 15px;
+  background: #666;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 </style>

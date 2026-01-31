@@ -54,4 +54,21 @@ router.put("/profile/update", isAuthenticated, async (req, res) => {
   }
 });
 
+router.delete("/profile/delete", isAuthenticated, async (req, res) => {
+  const userId = req.session.userId;
+
+  try {
+    await db.run("DELETE FROM readings WHERE user_id = ?", [userId]);
+
+    await db.run("DELETE FROM users WHERE id = ?", [userId]);
+
+    req.session.destroy();
+
+    res.send({ message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Delete account error:", error);
+    res.status(500).send({ error: "Failed to delete account" });
+  }
+});
+
 export default router;
