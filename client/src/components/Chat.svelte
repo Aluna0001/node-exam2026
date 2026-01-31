@@ -36,6 +36,17 @@
     socket.emit('chat-message', { text: messageText })
     messageText = ''
   }
+
+  function timeAgo(timestamp) {
+  const now = new Date()
+  const then = new Date(timestamp)
+  const seconds = Math.floor((now.getTime() - then.getTime()) / 1000)
+  
+  if (seconds < 60) return 'just now'
+  if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)} hr ago`
+  return `${Math.floor(seconds / 86400)} days ago`
+}
 </script>
 
 <div class="chat">
@@ -47,7 +58,10 @@
         <p class="system">{msg.text}</p>
       {:else}
         <div class="message">
+          <div class="message-header">
           <span class="username" class:owner={msg.role === 'owner'} class:admin={msg.role === 'admin'}>{msg.username}:</span>
+          <span class="timestamp">{timeAgo(msg.timestamp)}</span>
+        </div>
           <span class="text">{msg.text}</span>
         </div>
       {/if}
@@ -93,6 +107,18 @@
   .message {
     margin: 8px 0;
     color: #d4af37;
+  }
+
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .timestamp {
+    font-size: 10px;
+    color: #555;
+    margin-left: 8px;
   }
 
   .username {
