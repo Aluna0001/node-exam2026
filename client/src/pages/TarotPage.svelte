@@ -34,6 +34,9 @@
       if (result.limitReached) {
         limitReached = true
         resetTime = result.resetTime
+        card = null
+        interpretation = null
+        question = ''
         toastr.error('Daily limit reached')
       } else {
         card = result.card
@@ -45,11 +48,30 @@
     } catch (error) {
       if (error.message.includes('Daily limit')) {
         limitReached = true
+        card = null
+        interpretation = null
+        question = ''
       } else {
         toastr.error(error.message)
       }
     } finally {
       loading = false
+    }
+  }
+
+  async function handleDrawAnother() {
+    const limitStatus = await checkDailyLimit()
+    
+    if (limitStatus.limitReached) {
+      limitReached = true
+      resetTime = limitStatus.resetTime
+      card = null
+      interpretation = null
+      toastr.info('Daily limit reached')
+    } else {
+      card = null
+      interpretation = null
+      question = ''
     }
   }
 
@@ -117,7 +139,7 @@
           </div>
         </div>
 
-        <button class="draw-again" onclick={() => { card = null; interpretation = null; question = '' }}>
+        <button class="draw-again" onclick={handleDrawAnother}> 
           Draw Another Card
         </button>
       </div>
