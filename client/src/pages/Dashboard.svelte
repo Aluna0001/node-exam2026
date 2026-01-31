@@ -6,6 +6,7 @@
   import ReadingDetail from './ReadingDetail.svelte'
   import LeftSidebar from '../components/LeftSidebar.svelte'
   import RightSidebar from '../components/RightSidebar.svelte'
+  import ProfileSettings from './ProfileSettings.svelte'
 
   let currentPage = $state('home')
   
@@ -51,6 +52,8 @@
         <TarotPage />
       {:else if currentPage === 'reading'}
         <ReadingDetail />
+        {:else if currentPage === 'profile-settings'}
+        <ProfileSettings />
       {/if}
     </main>
 

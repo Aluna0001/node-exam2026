@@ -9,9 +9,12 @@ db.exec(`
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         role TEXT CHECK(role IN('owner', 'admin', 'user')) NOT NULL DEFAULT 'user',
+        birthdate TEXT,
+        show_zodiac INTEGER DEFAULT 1,
+        bio TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
-`)
+`);
 
 const hashedPassword = await passwordUtils.hashPassword(
   process.env.OWNER_PASSWORD || 'password123'

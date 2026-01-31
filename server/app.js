@@ -10,6 +10,7 @@ import { generalLimiter, authLimiter } from './middleware/rateLimiters.js'
 import authRoutes from './routes/authRoutes.js'
 import tarotRoutes from './routes/tarotRoutes.js'
 import signupRoutes from './routes/signupRoutes.js'
+import profileRoutes from "./routes/profileRoutes.js";
 
 const app = express()
 
@@ -34,6 +35,7 @@ app.use('/auth', authLimiter)
 app.use(authRoutes)
 app.use(tarotRoutes)
 app.use(signupRoutes)
+app.use(profileRoutes);
 
 app.use(express.static('./../client/dist'))
 
