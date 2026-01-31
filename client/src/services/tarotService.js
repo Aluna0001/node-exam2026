@@ -1,4 +1,8 @@
-import { fetchRequestJson } from "../utils/fetch.js";
+import { fetchGet, fetchRequestJson } from "../utils/fetch.js";
+
+export async function checkDailyLimit() {
+  return await fetchGet("/tarot/check-limit");
+}
 
 export async function drawTarotCard(question) {
   const response = await fetchRequestJson("/tarot/draw", { question }, "POST");

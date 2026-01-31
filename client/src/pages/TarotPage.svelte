@@ -1,5 +1,6 @@
 <script>
-  import { drawTarotCard } from '../services/tarotService.js'
+  import { drawTarotCard, checkDailyLimit } from '../services/tarotService.js'
+  import { onMount } from 'svelte'
   import toastr from 'toastr'
 
   let question = $state('')
@@ -9,6 +10,15 @@
   let error = $state(null)
   let limitReached = $state(false)
   let resetTime = $state(null)
+
+  onMount(async () => {
+    const limitStatus = await checkDailyLimit()
+    
+    if (limitStatus.limitReached) {
+      limitReached = true
+      resetTime = limitStatus.resetTime
+    }
+  })
 
   async function drawCard() {
     if (!question.trim()) {
@@ -58,9 +68,6 @@
 </script>
 
 <div class="tarot-page">
-  <h1>Tarot Card Reading</h1>
-  <p>Ask a question and draw a card to receive guidance</p>
-
   {#if limitReached}
     <div class="limit-reached">
       <div class="moon-icon">🌙</div>
@@ -78,6 +85,9 @@
       {/if}
     </div>
   {:else}
+    <h1>Tarot Card Reading</h1>
+    <p>Ask a question and draw a card to receive guidance</p>
+
     <div class="question-box">
       <input 
         type="text" 

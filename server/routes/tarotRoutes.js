@@ -107,4 +107,25 @@ router.get("/tarot/latest", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/tarot/check-limit", isAuthenticated, async (req, res) => {
+  const userId = req.session.userId;
+
+  try {
+    const count = await db.get(
+      `SELECT COUNT(*) as count FROM readings 
+       WHERE user_id = ? AND date(created_at) = date('now')`,
+      [userId],
+    );
+
+    res.send({
+      limitReached: count.count >= 2,
+      count: count.count,
+      resetTime: getNextMidnight(),
+    });
+  } catch (error) {
+    console.error("Error checking limit:", error);
+    res.status(500).send({ error: "Failed to check limit" });
+  }
+});
+
 export default router;
