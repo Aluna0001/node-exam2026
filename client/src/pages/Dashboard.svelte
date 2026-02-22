@@ -48,6 +48,7 @@
             <p>Read your destiny</p>
           </div>
         </div>
+        <!-- Do with navigate -->
       {:else if currentPage === 'tarot'}
         <TarotPage />
       {:else if currentPage === 'reading'}
