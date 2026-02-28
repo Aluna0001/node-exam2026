@@ -1,12 +1,14 @@
 <script>
-  let { onNavigate } = $props()
+  import { getContext } from 'svelte'
+
+  const { navigate } = getContext('navigation')
 </script>
 
 <aside class="left-sidebar">
   <h3>MAIN FUNCTIONS</h3>
   <nav>
-    <button onclick={() => onNavigate('tarot')}>Tarot Cards</button>
-    <button onclick={() => onNavigate('zodiac')}>Zodiac Signs</button>
+    <button onclick={() => navigate('tarot')}>Tarot Cards</button>
+    <button onclick={() => navigate('zodiac')}>Zodiac Signs</button>
   </nav>
 </aside>
 

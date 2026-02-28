@@ -25,40 +25,40 @@
   </header>
 
   <div class="layout">
-    <LeftSidebar onNavigate={navigate} />
+    <LeftSidebar />
 
     <main class="content">
-  {#if currentPage === 'home'}
-    <h1>Welcome to The Mystical Portal</h1>
-    <p>Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
-  
-    <div class="cards">
-      <div class="card">
-        <div class="icon">⭐</div>
-        <h3>Tarot</h3>
-        <p>Let the cards show the way</p>
-      </div>
-      <div class="card">
-        <div class="icon">🌙</div>
-        <h3>Zodiac</h3>
-        <p>Experience cosmic wisdom</p>
-      </div>
-      <div class="card">
-        <div class="icon">✨</div>
-        <h3>Palm Reading</h3>
-        <p>Read your destiny</p>
-      </div>
-    </div>
-  {:else if currentPage === 'tarot'}
-    <TarotPage />
-  {:else if currentPage === 'reading'}
-    <ReadingDetail />
-  {:else if currentPage === 'profile-settings'}
-    <ProfileSettings />
-  {:else if currentPage === 'zodiac'}
-    <Zodiac />
-  {/if}
-</main>
+      {#if currentPage === 'home'}
+        <h1>Welcome to The Mystical Portal</h1>
+        <p>Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
+      
+        <div class="cards">
+          <div class="card">
+            <div class="icon">⭐</div>
+            <h3>Tarot</h3>
+            <p>Let the cards show the way</p>
+          </div>
+          <div class="card">
+            <div class="icon">🌙</div>
+            <h3>Zodiac</h3>
+            <p>Experience cosmic wisdom</p>
+          </div>
+          <div class="card">
+            <div class="icon">✨</div>
+            <h3>Palm Reading</h3>
+            <p>Read your destiny</p>
+          </div>
+        </div>
+      {:else if currentPage === 'tarot'}
+        <TarotPage />
+      {:else if currentPage === 'reading'}
+        <ReadingDetail />
+      {:else if currentPage === 'profile-settings'}
+        <ProfileSettings />
+      {:else if currentPage === 'zodiac'}
+        <Zodiac />
+      {/if}
+    </main>
 
     <RightSidebar />
   </div>
