@@ -7,7 +7,6 @@
 
   async function handleLogin(event) {
     event.preventDefault()
-    console.log('Login attempt')
     const result = await login(username, password)
 
     if (result.error) {

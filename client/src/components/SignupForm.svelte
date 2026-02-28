@@ -22,7 +22,6 @@
     loading = true
     error = null
 
-    console.log('Signing up:', {username, email, password})
 
     loading = false
   }
