@@ -7,14 +7,6 @@
   <nav>
     <button onclick={() => onNavigate('tarot')}>Tarot Cards</button>
     <button onclick={() => onNavigate('zodiac')}>Zodiac Signs</button>
-    <button>Palm Reading</button>
-  </nav>
-  
-  <h3>ADDITIONAL INSIGHT</h3>
-  <nav>
-    <button>Moon Phase</button>
-    <button>Daily Horoscope</button>
-    <button>Spiritual Guidance</button>
   </nav>
 </aside>
 
