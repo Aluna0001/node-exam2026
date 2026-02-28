@@ -6,7 +6,7 @@
   <h3>MAIN FUNCTIONS</h3>
   <nav>
     <button onclick={() => onNavigate('tarot')}>Tarot Cards</button>
-    <button>Zodiac Signs</button>
+    <button onclick={() => onNavigate('zodiac')}>Zodiac Signs</button>
     <button>Palm Reading</button>
   </nav>
   
