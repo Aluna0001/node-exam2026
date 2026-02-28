@@ -3,6 +3,8 @@
   import { onMount } from 'svelte'
   import toastr from 'toastr'
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   let question = $state('')
   let card = $state(null)
   let interpretation = $state(null)
@@ -131,7 +133,7 @@
         <p class="base-meaning">{card.baseMeaning}</p>
 
         <div class="reading-layout">
-          <img src={`http://localhost:8080${card.imageUrl}`} alt={card.name} />
+          <img src={`${API_URL}${card.imageUrl}`} alt={card.name} />
           
           <div class="interpretation">
             <h3>Your Reading</h3>

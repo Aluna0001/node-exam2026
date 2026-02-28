@@ -2,6 +2,8 @@
   import { getLatestReading } from '../services/readingService.js'
   import { onMount } from 'svelte'
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   let reading = $state(null)
   let loading = $state(true)
 
@@ -18,7 +20,7 @@
     <h1>{reading.card_name}</h1>
     
     <div class="card-image">
-      <img src={`http://localhost:8080${reading.card_image}`} alt={reading.card_name} />
+      <img src={`${API_URL}${reading.card_image}`} alt={reading.card_name} />
     </div>
 
     <div class="question-section">
