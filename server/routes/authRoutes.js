@@ -66,18 +66,38 @@ router.post("/auth/logout", (req, res) => {
   });
 });
 
-router.get("/auth/status", (req, res) => {
-  if (req.session.userId) {
+router.get("/auth/status", async (req, res) => {
+  if (!req.session.userId) {
+    return res.send({ isAuthenticated: false });
+  }
+
+  try {
+    const user = await db.get(
+      "SELECT * FROM users WHERE id = ?",
+      req.session.userId,
+    );
+
+    if (!user) {
+      return res.send({ isAuthenticated: false });
+    }
+
+    const zodiacSign = getZodiacSign(user.birthdate);
+
     return res.send({
       isAuthenticated: true,
       user: {
-        id: req.session.userId,
-        username: req.session.username,
-        role: req.session.role,
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        birthdate: user.birthdate,
+        show_zodiac: user.show_zodiac,
+        zodiacSign: zodiacSign,
       },
     });
+  } catch (error) {
+    res.status(500).send({ error: "Could not retrieve session" });
   }
-  res.send({ isAuthenticated: false });
 });
 
 export default router;

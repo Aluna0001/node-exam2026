@@ -43,11 +43,6 @@
             <h3>Zodiac</h3>
             <p>Experience cosmic wisdom</p>
           </div>
-          <div class="card">
-            <div class="icon">✨</div>
-            <h3>Palm Reading</h3>
-            <p>Read your destiny</p>
-          </div>
         </div>
       {:else if currentPage === 'tarot'}
         <TarotPage />

@@ -30,12 +30,7 @@
 
   <h3>LATEST READING</h3>
   <LatestReadingCard />
-  
-  <h3>TODAY'S ENERGY</h3>
-  <div class="energy">
-    <div class="icon">⭐</div>
-    <p>"The universe sends you messages. Listen with your heart."</p>
-  </div>
+
 </aside>
 
 <style>
@@ -73,27 +68,6 @@
     font-size: 14px;
     color: #666;
     margin: 5px 0;
-  }
-
-  .energy {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 15px 0;
-    text-align: center;
-  }
-
-  .energy .icon {
-    font-size: 64px;
-    margin-bottom: 15px;
-  }
-
-  .energy p {
-    font-style: italic;
-    color: #888;
-    font-size: 14px;
-    line-height: 1.6;
   }
 
   .edit-btn {
