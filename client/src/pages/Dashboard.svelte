@@ -1,16 +1,14 @@
 <script>
-  import { account } from '../stores/auth.js'
   import { logout } from '../services/authService.js'
   import { setContext } from 'svelte'
   import TarotPage from './TarotPage.svelte'
   import ReadingDetail from './ReadingDetail.svelte'
-  import LeftSidebar from '../components/LeftSidebar.svelte'
   import RightSidebar from '../components/RightSidebar.svelte'
   import ProfileSettings from './ProfileSettings.svelte'
   import Zodiac from './Zodiac.svelte'
 
   let currentPage = $state('home')
-  
+
   function navigate(page) {
     currentPage = page
   }
@@ -25,24 +23,22 @@
   </header>
 
   <div class="layout">
-    <LeftSidebar />
-
     <main class="content">
       {#if currentPage === 'home'}
         <h1>Welcome to The Mystical Portal</h1>
         <p>Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
-      
+
         <div class="cards">
-          <div class="card">
+          <button class="card" onclick={() => navigate('tarot')}>
             <div class="icon">⭐</div>
             <h3>Tarot</h3>
             <p>Let the cards show the way</p>
-          </div>
-          <div class="card">
+          </button>
+          <button class="card" onclick={() => navigate('zodiac')}>
             <div class="icon">🌙</div>
             <h3>Zodiac</h3>
             <p>Experience cosmic wisdom</p>
-          </div>
+          </button>
         </div>
       {:else if currentPage === 'tarot'}
         <TarotPage />
@@ -106,7 +102,7 @@
 
   .layout {
     display: grid;
-    grid-template-columns: 250px 1fr 300px;
+    grid-template-columns: 1fr 300px;
     gap: 20px;
     padding: 20px;
     max-width: 1600px;
@@ -131,19 +127,23 @@
   }
 
   .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: center;
     gap: 20px;
     margin-top: 40px;
   }
 
   .card {
+    width: 220px;
     padding: 40px 20px;
     border: 1px solid #333;
     border-radius: 12px;
     text-align: center;
     transition: all 0.3s;
     cursor: pointer;
+    background: transparent;
+    color: #d4af37;
+    font-family: inherit;
   }
 
   .card:hover {

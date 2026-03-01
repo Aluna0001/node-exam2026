@@ -1,17 +1,17 @@
 <script>
   import { account } from '../stores/auth.js'
   import { navigate } from 'svelte-routing'
-  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
 
   const { component: Component, requiresAuth = false } = $props()
 
-  onMount(() => {
-    if (requiresAuth && !$account) {
+  $effect(() => {
+    if (requiresAuth && !get(account)) {
       navigate('/login', { replace: true })
     }
   })
 </script>
 
-{#if !requiresAuth || $account}
+{#if !requiresAuth || get(account)}
   <Component />
 {/if}

@@ -4,7 +4,8 @@
   import { connectSocket, disconnectSocket } from './services/socketService.js'
   import { checkAuthStatus } from './services/authService.js'
   import { onMount, onDestroy } from 'svelte'
-  
+  import { get } from 'svelte/store'
+
   import LoginPage from './pages/LoginPage.svelte'
   import SignupPage from './pages/SignupPage.svelte'
   import Dashboard from './pages/Dashboard.svelte'
@@ -14,8 +15,8 @@
 
   onMount(async () => {
     await checkAuthStatus()
-    
-    if ($account) {
+
+    if (get(account)) {
       connectSocket()
     }
 
@@ -34,11 +35,11 @@
     <Route path="/login">
       <LoginPage />
     </Route>
-    
+
     <Route path="/signup">
       <SignupPage />
     </Route>
-    
+
     <Route path="/">
       <RouteGuard component={Dashboard} requiresAuth={true} />
     </Route>
