@@ -2,12 +2,11 @@
    GLOBAL STYLESHEET
 --------------------------- */
 
-/* Color system */
 :root {
   /* Brand */
   --color-primary: #d4af37;
   --color-primary-hover: #f4d03f;
-  --color-primary-soft: rgba(212, 175, 55, 0.1);
+  --color-primary-soft: rgba(212, 175, 55, 0.15);
   --color-primary-faint: rgba(212, 175, 55, 0.05);
 
   /* Text */
@@ -17,13 +16,13 @@
   --color-text-light: #ccc;
 
   /* Surfaces */
-  --color-bg: #0a0a0a;
-  --color-surface: #1a1a1a;
-  --color-surface-raised: #222;
+  --color-bg: #0d0d18;
+  --color-surface: #1a1a2e;
+  --color-surface-raised: #16213e;
 
   /* Borders */
-  --color-border: #333;
-  --color-border-strong: #555;
+  --color-border: #2a2a4a;
+  --color-border-strong: #3a3a5a;
 
   /* Status */
   --color-success: #0f7a3a;
@@ -34,9 +33,9 @@
   --color-danger-soft-hover: rgba(220, 53, 69, 0.1);
 
   /* Shadows */
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 20px rgba(212, 175, 55, 0.3);
-  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px rgba(212, 175, 55, 0.2);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
 
   /* Spacing */
   --radius-sm: 6px;
@@ -60,7 +59,8 @@ html, body {
 
 body {
   font-family: var(--font-family);
-  background: var(--color-bg);
+  background: radial-gradient(ellipse at top, #1a1a3e 0%, #0d0d18 60%);
+  background-attachment: fixed;
   color: var(--color-text);
   line-height: 1.5;
   font-weight: 400;

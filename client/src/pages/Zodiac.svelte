@@ -3,6 +3,7 @@
   import { get } from 'svelte/store'
   import ZodiacCard from '../components/ZodiacCard.svelte'
   import ZodiacModal from '../components/ZodiacModal.svelte'
+  import UserZodiac from '../components/UserZodiac.svelte'
 
   let selectedZodiac = $state(null)
   const user = $derived(get(account))
@@ -33,9 +34,7 @@
   <p class="subtitle">Discover the cosmic energies that guide each sign</p>
 
   {#if user?.zodiacSign}
-    <div class="user-zodiac">
-      <p>Your Zodiac: <span class="highlight">{user.zodiacSign}</span></p>
-    </div>
+    <UserZodiac zodiacSign={user.zodiacSign} />
   {/if}
 
   <div class="zodiac-grid">
@@ -74,25 +73,6 @@
     text-align: center;
     color: var(--color-text-muted);
     margin-bottom: 30px;
-  }
-
-  .user-zodiac {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 20px;
-    background: var(--color-primary-soft);
-    border-radius: var(--radius-lg);
-  }
-
-  .user-zodiac p {
-    font-size: 18px;
-    color: var(--color-text-light);
-  }
-
-  .highlight {
-    color: var(--color-text);
-    font-weight: bold;
-    font-size: 24px;
   }
 
   .zodiac-grid {
