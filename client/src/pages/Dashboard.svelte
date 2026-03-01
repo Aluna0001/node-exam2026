@@ -3,6 +3,7 @@
   import Header from '../components/Header.svelte'
   import RightSidebar from '../components/RightSidebar.svelte'
   import TarotPage from './TarotPage.svelte'
+  import TarotHistory from './TarotHistory.svelte'
   import ReadingDetail from './ReadingDetail.svelte'
   import ProfileSettings from './ProfileSettings.svelte'
   import Zodiac from './Zodiac.svelte'
@@ -42,6 +43,10 @@
       {:else if currentPage === 'tarot'}
         <div class="page-content">
           <TarotPage />
+        </div>
+      {:else if currentPage === 'tarot-history'}
+        <div class="page-content">
+          <TarotHistory />
         </div>
       {:else if currentPage === 'reading'}
         <div class="page-content">

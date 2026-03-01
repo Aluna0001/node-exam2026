@@ -29,7 +29,10 @@
   {:else if reading}
     <p class="card-name">{reading.card_name}</p>
     <p class="timestamp">{timeAgo(reading.created_at)}</p>
-    <button class="view-btn" onclick={() => navigate('reading')}>View Reading</button>
+    <div class="buttons">
+      <button class="view-btn" onclick={() => navigate('reading')}>View Latest</button>
+      <button class="history-btn" onclick={() => navigate('tarot-history')}>All Readings</button>
+    </div>
   {:else}
     <p class="no-reading">You haven't received any wisdom yet</p>
   {/if}
@@ -63,6 +66,12 @@
     margin-bottom: 15px;
   }
 
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   .view-btn {
     width: 100%;
     padding: 10px;
@@ -75,6 +84,21 @@
 
   .view-btn:hover {
     background: var(--color-primary-soft);
+  }
+
+  .history-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--color-primary);
+    border: none;
+    color: var(--color-bg);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .history-btn:hover {
+    background: var(--color-primary-hover);
   }
 
   .no-reading {

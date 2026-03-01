@@ -128,4 +128,30 @@ router.get("/tarot/check-limit", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/tarot/history", isAuthenticated, async (req, res) => {
+  const userId = req.session.userId;
+
+  try {
+    const readings = await db.all(
+      `SELECT 
+        r.id,
+        r.question,
+        r.interpretation,
+        r.created_at,
+        c.name as card_name,
+        c.image_url as card_image
+      FROM readings r
+      JOIN tarot_cards c ON r.card_id = c.id
+      WHERE r.user_id = ?
+      ORDER BY r.created_at DESC`,
+      [userId],
+    );
+
+    res.send({ readings });
+  } catch (error) {
+    console.error("Error fetching reading history:", error);
+    res.status(500).send({ error: "Failed to fetch reading history" });
+  }
+});
+
 export default router;

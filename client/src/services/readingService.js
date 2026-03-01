@@ -9,3 +9,13 @@ export async function getLatestReading() {
     return null;
   }
 }
+
+export async function getReadingHistory() {
+  try {
+    const data = await fetchGet("/tarot/history");
+    return data.readings;
+  } catch (error) {
+    console.error("Error fetching reading history:", error);
+    return [];
+  }
+}
