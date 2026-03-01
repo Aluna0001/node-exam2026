@@ -28,7 +28,7 @@
         <div class="user">
           <span class="dot"></span>
           <div class="user-info">
-            <span class="username" class:owner={user.role === 'owner'} class:admin={user.role === 'admin'}>
+            <span class="username" class:owner={user.role === 'owner'}>
               {user.username}
             </span>
             <span class="zodiac">
@@ -107,12 +107,12 @@
   }
 
   .user-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 400px;
-  overflow-y: auto;
-}
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
 
   .user {
     display: flex;
@@ -146,10 +146,6 @@
 
   .username.owner {
     color: #9b59b6;
-  }
-
-  .username.admin {
-    color: #ff69b4;
   }
 
   .zodiac {

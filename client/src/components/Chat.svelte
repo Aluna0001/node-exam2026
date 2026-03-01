@@ -41,7 +41,7 @@
       {:else}
         <div class="message">
           <div class="message-header">
-            <span class="username" class:owner={msg.role === 'owner'} class:admin={msg.role === 'admin'}>{msg.username}:</span>
+            <span class="username" class:owner={msg.role === 'owner'}>{msg.username}:</span>
             <span class="timestamp">{timeAgo(msg.timestamp)}</span>
           </div>
           <span class="text">{msg.text}</span>
@@ -110,10 +110,6 @@
 
   .username.owner {
     color: #9b59b6;
-  }
-
-  .username.admin {
-    color: #ff69b4;
   }
 
   .text {
