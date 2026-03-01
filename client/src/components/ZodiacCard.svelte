@@ -32,9 +32,9 @@
   }
 
   .zodiac-card.user-sign {
-    border-color: var(--color-primary);
-    background: var(--color-primary-soft);
-  }
+  border-color: #9b59b6;
+  background: rgba(155, 89, 182, 0.15);
+}
 
   .symbol {
     font-size: 64px;
