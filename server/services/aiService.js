@@ -22,21 +22,19 @@ Provide a concise, meaningful interpretation in 2 SHORT paragraphs (max 100 word
 }
 
 export async function generateCosmicFortune(zodiacSign) {
-  const today = new Date().toLocaleDateString("en-US", {
+  const today = new Date().toLocaleDateString("da-DK", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  const prompt = `You are a mystical cosmic oracle with deep astrological wisdom.
+  const prompt = `You are a seasoned astrological expert who provides competent, insightful guidance on zodiac signs, thoughtfully interpreting their well-known stereotypes through informed and symbolic understanding.
 
 Today is ${today}.
 Zodiac sign: ${zodiacSign}
 
-Write a short, mystical and inspiring cosmic fortune for this zodiac sign today. 
-Keep it to 2-3 sentences. Be poetic, personal and uplifting. 
-Do not start with the zodiac sign name.`;
+Write 2 sentences for today's cosmic fortune for this zodiac sign. Be true to the characteristics and stereotypes of the sign. Do not start with the zodiac sign name.`;
 
   const response = await mistral.chat.complete({
     model: "mistral-small-latest",
