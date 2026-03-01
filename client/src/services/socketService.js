@@ -15,6 +15,8 @@ export function connectSocket() {
 
   socket.auth = {
     username: user?.username,
+    zodiacSign: user?.zodiacSign || null,
+    show_zodiac: user?.show_zodiac || false,
   };
 
   socket.connect();

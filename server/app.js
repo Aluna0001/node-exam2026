@@ -29,9 +29,7 @@ app.use(
 );
 
 app.use(helmet());
-
 app.use(sessionMiddleware);
-
 app.use(generalLimiter);
 
 app.use("/images", express.static("./public/images"));
@@ -61,16 +59,36 @@ const io = new Server(httpServer, {
 
 io.engine.use(sessionMiddleware);
 
+const onlineUsers = new Map();
+
 io.on("connection", (socket) => {
   const session = socket.request.session;
   const username =
     socket.handshake.auth.username || session?.username || "anonymous";
+  const role = session?.role || "user";
+  const zodiacSign = socket.handshake.auth.zodiacSign || null;
+  const showZodiac = socket.handshake.auth.show_zodiac || false;
 
   console.log("User connected:", username, socket.id);
 
+  const existingSocketId = [...onlineUsers.entries()].find(
+    ([, user]) => user.username === username,
+  )?.[0];
+
+  if (existingSocketId) {
+    console.log("Disconnecting existing session for:", username);
+    const existingSocket = io.sockets.sockets.get(existingSocketId);
+    if (existingSocket) {
+      existingSocket.disconnect(true);
+    }
+    onlineUsers.delete(existingSocketId);
+  }
+
   socket.username = username;
+  onlineUsers.set(socket.id, { username, role, zodiacSign, showZodiac });
 
   io.emit("user-joined", { username });
+  io.emit("online-users", Array.from(onlineUsers.values()));
 
   socket.on("chat-message", (data) => {
     const session = socket.request.session;
@@ -87,9 +105,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", username || "anonymous", socket.id);
-
+    console.log("User disconnected:", username, socket.id);
+    onlineUsers.delete(socket.id);
     io.emit("user-left", { username });
+    io.emit("online-users", Array.from(onlineUsers.values()));
   });
 });
 

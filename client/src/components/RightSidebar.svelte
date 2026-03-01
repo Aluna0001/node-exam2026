@@ -2,11 +2,14 @@
   import ProfileCard from './ProfileCard.svelte'
   import Chat from './Chat.svelte'
   import LatestReadingCard from './LatestReadingCard.svelte'
+  import OnlineUsers from './OnlineUsers.svelte'
 </script>
 
 <aside class="right-sidebar">
   <h3>YOUR PROFILE</h3>
   <ProfileCard />
+
+  <OnlineUsers />
 
   <Chat />
 
