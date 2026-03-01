@@ -12,21 +12,21 @@
 
   async function handleSignup(event) {
     event.preventDefault()
-    
+
     if (signupPassword !== confirmPassword) {
       toastr.error('Passwords do not match')
       return
     }
-    
+
     if (signupPassword.length < 6) {
       toastr.error('Password must be at least 6 characters')
       return
     }
-    
+
     loading = true
-    
+
     const result = await signup(signupUsername, signupEmail, signupPassword)
-    
+
     if (result.error) {
       toastr.error(result.error)
     } else {
@@ -34,7 +34,7 @@
       connectSocket()
       navigate('/', { replace: true })
     }
-    
+
     loading = false
   }
 </script>
@@ -45,29 +45,29 @@
 
   <div class="auth-box">
     <h2>Create Account</h2>
-    
+
     <form onsubmit={handleSignup}>
-      <input 
-        type="text" 
-        placeholder="Username" 
+      <input
+        type="text"
+        placeholder="Username"
         bind:value={signupUsername}
         autocomplete="username"
       />
-      <input 
-        type="email" 
-        placeholder="Email" 
+      <input
+        type="email"
+        placeholder="Email"
         bind:value={signupEmail}
         autocomplete="email"
       />
-      <input 
-        type="password" 
-        placeholder="Password" 
+      <input
+        type="password"
+        placeholder="Password"
         bind:value={signupPassword}
         autocomplete="new-password"
       />
-      <input 
-        type="password" 
-        placeholder="Confirm Password" 
+      <input
+        type="password"
+        placeholder="Confirm Password"
         bind:value={confirmPassword}
         autocomplete="new-password"
       />
@@ -85,7 +85,7 @@
 <style>
   .landing {
     min-height: 100vh;
-    background: #0a0a0a;
+    background: var(--color-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,21 +95,21 @@
 
   h1 {
     font-size: 64px;
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 10px;
     letter-spacing: 8px;
   }
 
   .subtitle {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 18px;
     margin-bottom: 60px;
   }
 
   .auth-box {
-    background: rgba(212, 175, 55, 0.03);
-    border: 1px solid #333;
-    border-radius: 12px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 40px;
     width: 100%;
     max-width: 400px;
@@ -117,7 +117,7 @@
 
   h2 {
     text-align: center;
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 30px;
     font-size: 24px;
   }
@@ -130,22 +130,22 @@
 
   input {
     padding: 15px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #d4af37;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
     font-size: 16px;
+    font-family: var(--font-family);
   }
 
   input::placeholder {
-    color: #666;
+    color: var(--color-text-dim);
   }
 
   button {
     padding: 15px;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: var(--radius-md);
     font-weight: bold;
     font-size: 16px;
   }
@@ -163,12 +163,12 @@
   .secondary {
     width: 100%;
     background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
     margin-top: 15px;
   }
 
   .secondary:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: var(--color-primary-soft);
   }
 </style>

@@ -94,3 +94,25 @@ button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* Toastr overrides */
+#toast-container > div {
+  border-radius: var(--radius-lg);
+  opacity: 1;
+}
+
+#toast-container .toast-success {
+  background-color: var(--color-success);
+}
+
+#toast-container .toast-error {
+  background-color: var(--color-danger);
+}
+
+#toast-container .toast-warning {
+  background-color: var(--color-warning);
+}
+
+#toast-container .toast-info {
+  background-color: var(--color-primary);
+}

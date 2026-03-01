@@ -14,7 +14,6 @@
 
   onMount(async () => {
     const limitStatus = await checkDailyLimit()
-
     if (limitStatus.limitReached) {
       limitReached = true
       resetTime = limitStatus.resetTime
@@ -107,7 +106,7 @@
     </div>
   {:else}
     <h1>Tarot Card Reading</h1>
-    <p>Ask a question and draw a card to receive guidance</p>
+    <p class="subtitle">Ask a question and draw a card to receive guidance</p>
 
     <div class="question-box">
       <input
@@ -140,12 +139,12 @@
   h1 {
     text-align: center;
     margin-bottom: 10px;
-    color: #d4af37;
+    color: var(--color-text);
   }
 
-  p {
+  .subtitle {
     text-align: center;
-    color: #888;
+    color: var(--color-text-muted);
     margin-bottom: 40px;
   }
 
@@ -158,24 +157,24 @@
   input {
     flex: 1;
     padding: 15px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #d4af37;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
     font-size: 16px;
+    font-family: var(--font-family);
   }
 
   input::placeholder {
-    color: #666;
+    color: var(--color-text-dim);
   }
 
   button {
     padding: 15px 30px;
-    background: #d4af37;
-    color: #0a0a0a;
+    background: var(--color-primary);
+    color: var(--color-bg);
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: var(--radius-md);
     font-weight: bold;
   }
 
@@ -185,7 +184,7 @@
   }
 
   .error {
-    color: #dc3545;
+    color: var(--color-danger);
     text-align: center;
   }
 
@@ -193,9 +192,9 @@
     max-width: 600px;
     margin: 60px auto;
     text-align: center;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 12px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 60px 40px;
   }
 
@@ -206,26 +205,26 @@
 
   .limit-reached h2 {
     font-size: 32px;
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 20px;
   }
 
   .limit-message {
     font-size: 16px;
     line-height: 1.8;
-    color: #ccc;
+    color: var(--color-text-light);
     margin-bottom: 30px;
   }
 
   .reset-info {
     font-size: 14px;
-    color: #888;
+    color: var(--color-text-muted);
     margin-bottom: 10px;
   }
 
   .countdown {
     font-size: 18px;
-    color: #d4af37;
+    color: var(--color-text);
     font-weight: bold;
   }
 </style>

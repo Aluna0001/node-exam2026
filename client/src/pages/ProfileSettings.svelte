@@ -121,21 +121,21 @@
 
   h1 {
     font-size: 36px;
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 40px;
     text-align: center;
   }
 
   .form-section {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 12px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 30px;
     margin-bottom: 30px;
   }
 
   h3 {
-    color: #d4af37;
+    color: var(--color-text);
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 18px;
@@ -152,7 +152,7 @@
   }
 
   .form-group span {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 14px;
     margin-bottom: 8px;
   }
@@ -163,11 +163,12 @@
   input[type="date"] {
     width: 100%;
     padding: 12px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #d4af37;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
     font-size: 16px;
+    font-family: var(--font-family);
   }
 
   input:disabled {
@@ -183,7 +184,7 @@
   }
 
   .toggle-group > span {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 14px;
   }
 
@@ -191,17 +192,16 @@
     position: relative;
     width: 50px;
     height: 26px;
-    background-color: #333;
-    border: 1px solid #555;
+    background-color: var(--color-border);
+    border: 1px solid var(--color-border-strong);
     border-radius: 13px;
-    cursor: pointer;
     transition: background-color 0.3s;
     padding: 0;
   }
 
   .toggle-switch.active {
-    background-color: #d4af37;
-    border-color: #d4af37;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
   }
 
   .toggle-slider {
@@ -222,13 +222,12 @@
   .save-btn {
     width: 100%;
     padding: 15px;
-    background-color: #d4af37;
-    color: #0a0a0a;
+    background-color: var(--color-primary);
+    color: var(--color-bg);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
   }
 
   .save-btn:disabled {
@@ -237,6 +236,6 @@
   }
 
   .save-btn:hover:not(:disabled) {
-    background-color: #f4d03f;
+    background-color: var(--color-primary-hover);
   }
 </style>

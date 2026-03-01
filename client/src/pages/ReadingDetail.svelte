@@ -18,7 +18,7 @@
     <p class="loading">Loading your reading...</p>
   {:else if reading}
     <h1>{reading.card_name}</h1>
-    
+
     <div class="card-image">
       <img src={`${API_URL}${reading.card_image}`} alt={reading.card_name} />
     </div>
@@ -48,14 +48,14 @@
 
   .loading {
     text-align: center;
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 18px;
   }
 
   h1 {
     text-align: center;
     font-size: 36px;
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 30px;
   }
 
@@ -68,15 +68,15 @@
     width: 200px;
     height: 320px;
     object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   .question-section,
   .interpretation-section {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 12px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 30px;
     margin-bottom: 20px;
   }
@@ -84,24 +84,24 @@
   h3 {
     margin-top: 0;
     margin-bottom: 15px;
-    color: #d4af37;
+    color: var(--color-text);
   }
 
   p {
     line-height: 1.8;
-    color: #ccc;
+    color: var(--color-text-light);
   }
 
   .date {
     text-align: center;
-    color: #666;
+    color: var(--color-text-dim);
     font-size: 14px;
     margin-top: 30px;
   }
 
   .no-reading {
     text-align: center;
-    color: #666;
+    color: var(--color-text-dim);
     font-size: 18px;
   }
 </style>

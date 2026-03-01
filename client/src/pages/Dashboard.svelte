@@ -65,9 +65,9 @@
 <style>
   .dashboard {
     min-height: 100vh;
-    background: #0a0a0a;
-    color: #d4af37;
-    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-family);
   }
 
   .layout {
@@ -96,7 +96,7 @@
 
   .intro {
     text-align: center;
-    color: #888;
+    color: var(--color-text-muted);
     max-width: 600px;
     margin: 0 auto 50px;
   }
@@ -111,18 +111,17 @@
   .card {
     width: 220px;
     padding: 40px 20px;
-    border: 1px solid #333;
-    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     text-align: center;
     transition: all 0.3s;
-    cursor: pointer;
     background: transparent;
-    color: #d4af37;
-    font-family: inherit;
+    color: var(--color-text);
+    font-family: var(--font-family);
   }
 
   .card:hover {
-    border-color: #d4af37;
+    border-color: var(--color-primary);
     transform: translateY(-5px);
   }
 
@@ -136,7 +135,7 @@
   }
 
   .card p {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 14px;
   }
 </style>
