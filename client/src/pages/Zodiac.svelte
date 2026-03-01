@@ -1,7 +1,12 @@
 <script>
   import { account } from '../stores/auth.js'
+  import { get } from 'svelte/store'
+  import ZodiacCard from '../components/ZodiacCard.svelte'
+  import ZodiacModal from '../components/ZodiacModal.svelte'
 
   let selectedZodiac = $state(null)
+
+  const user = $derived(get(account))
 
   const zodiacSigns = [
     {
@@ -103,16 +108,8 @@
   ]
 
   function getUserZodiacName() {
-    if (!$account?.zodiacSign) return null
-    return $account.zodiacSign.split(' ')[0]
-  }
-
-  function openModal(zodiac) {
-    selectedZodiac = zodiac
-  }
-
-  function closeModal() {
-    selectedZodiac = null
+    if (!user?.zodiacSign) return null
+    return user.zodiacSign.split(' ')[0]
   }
 </script>
 
@@ -120,62 +117,28 @@
   <h1>Zodiac Signs</h1>
   <p class="subtitle">Discover the cosmic energies that guide each sign</p>
 
-  {#if $account?.zodiacSign}
+  {#if user?.zodiacSign}
     <div class="user-zodiac">
-      <p>Your Zodiac: <span class="highlight">{$account.zodiacSign}</span></p>
+      <p>Your Zodiac: <span class="highlight">{user.zodiacSign}</span></p>
     </div>
   {/if}
 
   <div class="zodiac-grid">
     {#each zodiacSigns as zodiac}
-      <button 
-        class="zodiac-card" 
-        class:user-sign={getUserZodiacName() === zodiac.name}
-        onclick={() => openModal(zodiac)}
-      >
-        <div class="symbol">{zodiac.symbol}</div>
-        <h3>{zodiac.name}</h3>
-        <p class="dates">{zodiac.dates}</p>
-      </button>
+      <ZodiacCard
+        {zodiac}
+        isUserSign={getUserZodiacName() === zodiac.name}
+        onSelect={(z) => selectedZodiac = z}
+      />
     {/each}
   </div>
 </div>
 
 {#if selectedZodiac}
-  <div 
-    class="modal-overlay" 
-    onclick={closeModal}
-    onkeydown={(e) => (e.key === 'Escape' || e.key === 'Enter') && closeModal()}
-    role="button" 
-    tabindex="0"
-    aria-label="Close modal"
-  >
-    <div 
-      class="modal" 
-      onclick={(e) => e.stopPropagation()}
-      onkeydown={(e) => e.stopPropagation()}
-      role="dialog" 
-      aria-modal="true"
-      tabindex="-1"
-    >
-      <button class="close-btn" onclick={closeModal} aria-label="Close">✕</button>
-      
-      <div class="modal-header">
-        <div class="modal-symbol">{selectedZodiac.symbol}</div>
-        <h2>{selectedZodiac.name}</h2>
-        <p class="modal-dates">{selectedZodiac.dates}</p>
-        <p class="element">Element: {selectedZodiac.element}</p>
-      </div>
-
-      <div class="modal-body">
-        <p class="description">{selectedZodiac.description}</p>
-        <div class="traits">
-          <h4>Key Traits</h4>
-          <p>{selectedZodiac.traits}</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ZodiacModal
+    zodiac={selectedZodiac}
+    onClose={() => selectedZodiac = null}
+  />
 {/if}
 
 <style>
@@ -215,139 +178,6 @@
     color: #d4af37;
     font-weight: bold;
     font-size: 24px;
-  }
-
-  .zodiac-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
-
-  .zodiac-card {
-    background: rgba(212, 175, 55, 0.05);
-    border: 2px solid #333;
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .zodiac-card:hover {
-    border-color: #d4af37;
-    transform: translateY(-5px);
-  }
-
-  .zodiac-card.user-sign {
-    border-color: #d4af37;
-    background: rgba(212, 175, 55, 0.1);
-  }
-
-  .symbol {
-    font-size: 64px;
-    margin-bottom: 15px;
-  }
-
-  h3 {
-    color: #d4af37;
-    margin-bottom: 10px;
-  }
-
-  .dates {
-    color: #888;
-    font-size: 14px;
-  }
-
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-  }
-
-  .modal {
-    background: #1a1a1a;
-    border: 2px solid #d4af37;
-    border-radius: 12px;
-    padding: 40px;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-    cursor: default;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    border: none;
-    color: #d4af37;
-    font-size: 32px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-  }
-
-  .close-btn:hover {
-    color: #f4d03f;
-  }
-
-  .modal-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .modal-symbol {
-    font-size: 80px;
-    margin-bottom: 15px;
-  }
-
-  .modal h2 {
-    color: #d4af37;
-    font-size: 32px;
-    margin-bottom: 10px;
-  }
-
-  .modal-dates {
-    color: #888;
-    margin-bottom: 10px;
-  }
-
-  .element {
-    color: #d4af37;
-    font-style: italic;
-  }
-
-  .modal-body {
-    color: #ccc;
-  }
-
-  .description {
-    line-height: 1.8;
-    margin-bottom: 20px;
-  }
-
-  .traits h4 {
-    color: #d4af37;
-    margin-bottom: 10px;
-  }
-
-  .traits p {
-    color: #888;
   }
 
   .zodiac-grid {

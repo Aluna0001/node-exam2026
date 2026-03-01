@@ -2,20 +2,19 @@
   import { drawTarotCard, checkDailyLimit } from '../services/tarotService.js'
   import { onMount } from 'svelte'
   import toastr from 'toastr'
-
-  const API_URL = import.meta.env.VITE_API_URL
+  import TarotResult from '../components/TarotResult.svelte'
 
   let question = $state('')
   let card = $state(null)
   let interpretation = $state(null)
   let loading = $state(false)
-  let error = $state(null)
+  let err = $state(null)
   let limitReached = $state(false)
   let resetTime = $state(null)
 
   onMount(async () => {
     const limitStatus = await checkDailyLimit()
-    
+
     if (limitStatus.limitReached) {
       limitReached = true
       resetTime = limitStatus.resetTime
@@ -24,15 +23,16 @@
 
   async function drawCard() {
     if (!question.trim()) {
-      error = 'Please enter a question'
+      err = 'Please enter a question'
       return
     }
 
     loading = true
+    err = null
 
     try {
       const result = await drawTarotCard(question)
-      
+
       if (result.limitReached) {
         limitReached = true
         resetTime = result.resetTime
@@ -44,17 +44,16 @@
         card = result.card
         interpretation = result.interpretation
         toastr.success('Card drawn!')
-        
         window.dispatchEvent(new CustomEvent('reading-updated'))
       }
-    } catch (error) {
-      if (error.message.includes('Daily limit')) {
+    } catch (e) {
+      if (e.message.includes('Daily limit')) {
         limitReached = true
         card = null
         interpretation = null
         question = ''
       } else {
-        toastr.error(error.message)
+        toastr.error(e.message)
       }
     } finally {
       loading = false
@@ -63,7 +62,7 @@
 
   async function handleDrawAnother() {
     const limitStatus = await checkDailyLimit()
-    
+
     if (limitStatus.limitReached) {
       limitReached = true
       resetTime = limitStatus.resetTime
@@ -79,14 +78,14 @@
 
   function getTimeUntilReset() {
     if (!resetTime) return ''
-    
+
     const now = new Date()
     const reset = new Date(resetTime)
     const diff = reset.getTime() - now.getTime()
-    
+
     const hours = Math.floor(diff / (1000 * 60 * 60))
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-    
+
     return `${hours}h ${minutes}m`
   }
 </script>
@@ -97,13 +96,11 @@
       <div class="moon-icon">🌙</div>
       <h2>Daily Limit Reached</h2>
       <p class="limit-message">
-        You have drawn your 2 cards for today. The tarot requires time for energies 
-        to settle and vibrations to realign. Drawing too many cards in one day can 
+        You have drawn your 2 cards for today. The tarot requires time for energies
+        to settle and vibrations to realign. Drawing too many cards in one day can
         dilute the spiritual connection and lead to unclear guidance.
       </p>
-      <p class="reset-info">
-        Your readings will refresh at midnight
-      </p>
+      <p class="reset-info">Your readings will refresh at midnight</p>
       {#if resetTime}
         <p class="countdown">Resets in: {getTimeUntilReset()}</p>
       {/if}
@@ -113,9 +110,9 @@
     <p>Ask a question and draw a card to receive guidance</p>
 
     <div class="question-box">
-      <input 
-        type="text" 
-        placeholder="What question weighs on your heart?" 
+      <input
+        type="text"
+        placeholder="What question weighs on your heart?"
         bind:value={question}
       />
       <button onclick={drawCard} disabled={loading}>
@@ -123,28 +120,12 @@
       </button>
     </div>
 
-    {#if error}
-      <p class="error">{error}</p>
+    {#if err}
+      <p class="error">{err}</p>
     {/if}
 
     {#if card && interpretation}
-      <div class="result">
-        <h2>{card.name}</h2>
-        <p class="base-meaning">{card.baseMeaning}</p>
-
-        <div class="reading-layout">
-          <img src={`${API_URL}${card.imageUrl}`} alt={card.name} />
-          
-          <div class="interpretation">
-            <h3>Your Reading</h3>
-            <p>{interpretation}</p>
-          </div>
-        </div>
-
-        <button class="draw-again" onclick={handleDrawAnother}> 
-          Draw Another Card
-        </button>
-      </div>
+      <TarotResult {card} {interpretation} onDrawAnother={handleDrawAnother} />
     {/if}
   {/if}
 </div>
@@ -159,6 +140,7 @@
   h1 {
     text-align: center;
     margin-bottom: 10px;
+    color: #d4af37;
   }
 
   p {
@@ -205,64 +187,6 @@
   .error {
     color: #dc3545;
     text-align: center;
-  }
-
-  .result {
-    margin-top: 40px;
-  }
-
-  .result h2 {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 10px;
-  }
-
-  .base-meaning {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    margin-bottom: 30px;
-  }
-
-  .reading-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    margin-bottom: 30px;
-  }
-
-  .reading-layout img {
-    width: 200px;
-    height: 320px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
-  }
-
-  .interpretation {
-    width: 100%;
-    max-width: 700px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 30px;
-  }
-
-  .interpretation h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-
-  .interpretation p {
-    line-height: 1.8;
-    text-align: left;
-    color: #d4af37;
-  }
-
-  .draw-again {
-    display: block;
-    margin: 20px auto 0;
   }
 
   .limit-reached {

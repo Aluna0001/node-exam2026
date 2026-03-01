@@ -1,15 +1,18 @@
 <script>
   import { account } from '../stores/auth.js'
-  import { updateProfile, deleteAccount } from '../services/profileService.js'
+  import { get } from 'svelte/store'
+  import { updateProfile } from '../services/profileService.js'
   import toastr from 'toastr'
+  import Delete from '../components/Delete.svelte'
+
+  const user = get(account)
 
   let currentPassword = $state('')
   let newPassword = $state('')
   let confirmPassword = $state('')
-  let birthdate = $state($account.birthdate || '')
-  let showZodiac = $state($account.show_zodiac === 1)
+  let birthdate = $state(user?.birthdate || '')
+  let showZodiac = $state(user?.show_zodiac === 1)
   let loading = $state(false)
-  let showDeleteConfirm = $state(false)
 
   async function handleSave() {
     if (newPassword && newPassword !== confirmPassword) {
@@ -42,17 +45,6 @@
 
     loading = false
   }
-
-  async function handleDeleteAccount() {
-    const result = await deleteAccount()
-    
-    if (result.error) {
-      toastr.error(result.error)
-    } else {
-      toastr.success('Account deleted')
-      window.location.href = '/'
-    }
-  }
 </script>
 
 <div class="profile-settings">
@@ -60,15 +52,15 @@
 
   <div class="form-section">
     <h3>Account Information</h3>
-    
+
     <label class="form-group">
       <span>Username</span>
-      <input type="text" value={$account.username} disabled />
+      <input type="text" value={user?.username} disabled />
     </label>
 
     <label class="form-group">
       <span>Email</span>
-      <input type="email" value={$account.email} disabled />
+      <input type="email" value={user?.email} disabled />
     </label>
   </div>
 
@@ -101,8 +93,8 @@
 
     <div class="toggle-group">
       <span>Show zodiac sign in profile</span>
-      <button 
-        class="toggle-switch" 
+      <button
+        class="toggle-switch"
         class:active={showZodiac}
         onclick={() => showZodiac = !showZodiac}
         type="button"
@@ -117,26 +109,7 @@
     {loading ? 'Saving...' : 'Save Changes'}
   </button>
 
-  <div class="danger-zone">
-  <h3>Danger Zone</h3>
-  <p>Once you delete your account, there is no going back.</p>
-  
-  {#if !showDeleteConfirm}
-    <button class="delete-btn" onclick={() => showDeleteConfirm = true}>
-      Delete Account
-    </button>
-  {:else}
-    <p class="confirm-text">Are you sure? This cannot be undone!</p>
-    <div class="confirm-buttons">
-      <button class="delete-confirm-btn" onclick={handleDeleteAccount}>
-        Yes, Delete My Account
-      </button>
-      <button class="cancel-btn" onclick={() => showDeleteConfirm = false}>
-        Cancel
-      </button>
-    </div>
-  {/if}
-</div>
+  <Delete />
 </div>
 
 <style>
@@ -266,70 +239,4 @@
   .save-btn:hover:not(:disabled) {
     background-color: #f4d03f;
   }
-
-  .danger-zone {
-  margin-top: 40px;
-  padding: 30px;
-  border: 2px solid #dc3545;
-  border-radius: 12px;
-  background: rgba(220, 53, 69, 0.05);
-}
-
-.danger-zone h3 {
-  color: #dc3545;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.danger-zone p {
-  color: #888;
-  margin-bottom: 20px;
-}
-
-.delete-btn {
-  width: 100%;
-  padding: 15px;
-  background: transparent;
-  border: 2px solid #dc3545;
-  color: #dc3545;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.delete-btn:hover {
-  background: rgba(220, 53, 69, 0.1);
-}
-
-.confirm-text {
-  color: #dc3545;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.confirm-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.delete-confirm-btn {
-  flex: 1;
-  padding: 15px;
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.cancel-btn {
-  flex: 1;
-  padding: 15px;
-  background: #666;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
 </style>
