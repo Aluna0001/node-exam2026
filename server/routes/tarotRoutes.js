@@ -154,4 +154,50 @@ router.get("/tarot/history", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/horoscope/daily", isAuthenticated, async (req, res) => {
+  const userId = req.session.userId;
+
+  try {
+    const user = await db.get("SELECT birthdate FROM users WHERE id = ?", [
+      userId,
+    ]);
+
+    if (!user?.birthdate) {
+      return res.send({ horoscope: null, reason: "no-birthdate" });
+    }
+
+    const { getZodiacSign } = await import("../utils/zodiacUtils.js");
+    const zodiacSign = getZodiacSign(user.birthdate);
+
+    if (!zodiacSign) {
+      return res.send({ horoscope: null, reason: "no-zodiac" });
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+    const zodiacName = zodiacSign.split(" ")[0];
+
+    const existing = await db.get(
+      "SELECT * FROM horoscopes WHERE zodiac_sign = ? AND date = ?",
+      [zodiacName, today],
+    );
+
+    if (existing) {
+      return res.send({ horoscope: existing.message, zodiacSign });
+    }
+
+    const { generateCosmicFortune } = await import("../services/aiService.js");
+    const message = await generateCosmicFortune(zodiacName);
+
+    await db.run(
+      "INSERT INTO horoscopes (zodiac_sign, message, date) VALUES (?, ?, ?)",
+      [zodiacName, message, today],
+    );
+
+    res.send({ horoscope: message, zodiacSign });
+  } catch (error) {
+    console.error("Error generating horoscope:", error);
+    res.status(500).send({ error: "Failed to generate horoscope" });
+  }
+});
+
 export default router;

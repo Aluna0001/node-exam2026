@@ -19,3 +19,13 @@ export async function getReadingHistory() {
     return [];
   }
 }
+
+export async function getDailyHoroscope() {
+  try {
+    const data = await fetchGet("/horoscope/daily");
+    return data;
+  } catch (error) {
+    console.error("Error fetching horoscope:", error);
+    return null;
+  }
+}

@@ -7,6 +7,7 @@
   import ReadingDetail from './ReadingDetail.svelte'
   import ProfileSettings from './ProfileSettings.svelte'
   import Zodiac from './Zodiac.svelte'
+  import CosmicFortune from './CosmicFortune.svelte'
 
   let currentPage = $state('home')
 
@@ -38,6 +39,11 @@
               <h3>Zodiac</h3>
               <p>Experience cosmic wisdom</p>
             </button>
+            <button class="card" onclick={() => navigate('cosmic-fortune')}>
+              <div class="icon">🌌</div>
+              <h3>Cosmic Fortune</h3>
+              <p>Quick guidance from the universe</p>
+            </button>
           </div>
         </div>
       {:else if currentPage === 'tarot'}
@@ -59,6 +65,10 @@
       {:else if currentPage === 'zodiac'}
         <div class="page-content">
           <Zodiac />
+        </div>
+      {:else if currentPage === 'cosmic-fortune'}
+        <div class="page-content">
+          <CosmicFortune />
         </div>
       {/if}
     </main>
