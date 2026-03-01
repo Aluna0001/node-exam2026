@@ -16,7 +16,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
   }
 
   .logo {
@@ -24,7 +25,7 @@
     font-weight: bold;
     background: none;
     border: none;
-    color: #d4af37;
+    color: var(--color-text);
     cursor: pointer;
     padding: 0;
   }
@@ -36,15 +37,14 @@
   .logout-btn {
     padding: 10px 20px;
     background: transparent;
-    color: #d4af37;
-    border: 1px solid #d4af37;
-    border-radius: 5px;
-    cursor: pointer;
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
+    border-radius: var(--radius-sm);
     transition: all 0.3s;
   }
 
   .logout-btn:hover {
-    background: #d4af37;
-    color: #0a0a0a;
+    background: var(--color-text);
+    color: var(--color-bg);
   }
 </style>

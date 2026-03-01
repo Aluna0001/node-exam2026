@@ -15,17 +15,12 @@
 
   onMount(async () => {
     await loadReading()
-    
     window.addEventListener('reading-updated', loadReading)
   })
 
   onDestroy(() => {
     window.removeEventListener('reading-updated', loadReading)
   })
-
-  function viewReading() {
-    navigate('reading')
-  }
 </script>
 
 <div class="latest-reading">
@@ -34,7 +29,7 @@
   {:else if reading}
     <p class="card-name">{reading.card_name}</p>
     <p class="timestamp">{timeAgo(reading.created_at)}</p>
-    <button class="view-btn" onclick={viewReading}>View Reading</button>
+    <button class="view-btn" onclick={() => navigate('reading')}>View Reading</button>
   {:else}
     <p class="no-reading">You haven't received any wisdom yet</p>
   {/if}
@@ -42,29 +37,29 @@
 
 <style>
   .latest-reading {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     padding: 20px;
     margin: 15px 0;
     text-align: center;
   }
 
   .loading {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 14px;
   }
 
   .card-name {
     font-size: 18px;
-    color: #d4af37;
+    color: var(--color-text);
     font-weight: bold;
     margin-bottom: 8px;
   }
 
   .timestamp {
     font-size: 12px;
-    color: #666;
+    color: var(--color-text-dim);
     margin-bottom: 15px;
   }
 
@@ -72,19 +67,18 @@
     width: 100%;
     padding: 10px;
     background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
-    border-radius: 6px;
-    cursor: pointer;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    border-radius: var(--radius-sm);
     font-size: 14px;
   }
 
   .view-btn:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: var(--color-primary-soft);
   }
 
   .no-reading {
-    color: #666;
+    color: var(--color-text-dim);
     font-size: 14px;
     font-style: italic;
   }

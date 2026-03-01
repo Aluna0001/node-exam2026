@@ -1,5 +1,4 @@
 <script>
-  import { getContext } from 'svelte'
   import ProfileCard from './ProfileCard.svelte'
   import Chat from './Chat.svelte'
   import LatestReadingCard from './LatestReadingCard.svelte'
@@ -25,6 +24,6 @@
     font-size: 12px;
     letter-spacing: 2px;
     margin: 30px 0 15px 0;
-    color: #888;
+    color: var(--color-text-muted);
   }
 </style>

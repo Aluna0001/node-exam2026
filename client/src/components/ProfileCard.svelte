@@ -4,7 +4,6 @@
   import { get } from 'svelte/store'
 
   const { navigate } = getContext('navigation')
-
   const user = $derived(get(account))
 </script>
 
@@ -27,9 +26,9 @@
 
 <style>
   .profile-card {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     padding: 15px;
     margin: 15px 0;
   }
@@ -37,13 +36,13 @@
   .username {
     font-size: 18px;
     font-weight: bold;
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 5px;
   }
 
   .role {
     font-size: 12px;
-    color: #888;
+    color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 10px;
@@ -51,7 +50,7 @@
 
   .info {
     font-size: 14px;
-    color: #666;
+    color: var(--color-text-dim);
     margin: 5px 0;
   }
 
@@ -60,20 +59,19 @@
     padding: 10px;
     margin-top: 15px;
     background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
-    border-radius: 6px;
-    cursor: pointer;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    border-radius: var(--radius-sm);
     font-size: 14px;
   }
 
   .edit-btn:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: var(--color-primary-soft);
   }
 
   .zodiac {
     font-size: 18px;
-    color: #d4af37;
+    color: var(--color-text);
     margin: 10px 0;
     text-align: center;
   }

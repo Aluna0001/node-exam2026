@@ -6,7 +6,6 @@
 
   async function handleDeleteAccount() {
     const result = await deleteAccount()
-
     if (result.error) {
       toastr.error(result.error)
     } else {
@@ -41,19 +40,19 @@
   .danger-zone {
     margin-top: 40px;
     padding: 30px;
-    border: 2px solid #dc3545;
-    border-radius: 12px;
-    background: rgba(220, 53, 69, 0.05);
+    border: 2px solid var(--color-danger);
+    border-radius: var(--radius-lg);
+    background: var(--color-danger-soft);
   }
 
   .danger-zone h3 {
-    color: #dc3545;
+    color: var(--color-danger);
     margin-top: 0;
     margin-bottom: 10px;
   }
 
   .danger-zone p {
-    color: #888;
+    color: var(--color-text-muted);
     margin-bottom: 20px;
   }
 
@@ -61,19 +60,18 @@
     width: 100%;
     padding: 15px;
     background: transparent;
-    border: 2px solid #dc3545;
-    color: #dc3545;
-    border-radius: 8px;
-    cursor: pointer;
+    border: 2px solid var(--color-danger);
+    color: var(--color-danger);
+    border-radius: var(--radius-md);
     font-weight: bold;
   }
 
   .delete-btn:hover {
-    background: rgba(220, 53, 69, 0.1);
+    background: var(--color-danger-soft-hover);
   }
 
   .confirm-text {
-    color: #dc3545;
+    color: var(--color-danger);
     font-weight: bold;
     margin-bottom: 15px;
   }
@@ -86,26 +84,24 @@
   .delete-confirm-btn {
     flex: 1;
     padding: 15px;
-    background: #dc3545;
+    background: var(--color-danger);
     color: white;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: var(--radius-md);
     font-weight: bold;
   }
 
   .delete-confirm-btn:hover {
-    background: #c82333;
+    background: var(--color-danger-hover);
   }
 
   .cancel-btn {
     flex: 1;
     padding: 15px;
-    background: #666;
+    background: var(--color-border-strong);
     color: white;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: var(--radius-md);
   }
 
   .cancel-btn:hover {

@@ -1,6 +1,5 @@
 <script>
   import socket from '../services/socketService.js'
-  import { account } from '../stores/auth.js'
   import { timeAgo } from '../utils/timeUtil.js'
 
   let messagesContainer
@@ -18,22 +17,15 @@
   })
 
   socket.on('user-joined', (data) => {
-    messages = [...messages, {
-      system: true,
-      text: `${data.username} joined the chat`
-    }]
+    messages = [...messages, { system: true, text: `${data.username} joined the chat` }]
   })
 
   socket.on('user-left', (data) => {
-    messages = [...messages, {
-      system: true,
-      text: `${data.username} left the chat`
-    }]
+    messages = [...messages, { system: true, text: `${data.username} left the chat` }]
   })
 
   function sendMessage() {
     if (!messageText.trim()) return
-
     socket.emit('chat-message', { text: messageText })
     messageText = ''
   }
@@ -41,7 +33,7 @@
 
 <div class="chat">
   <h3>MYSTICAL CHAT</h3>
-  
+
   <div class="messages" bind:this={messagesContainer}>
     {#each messages as msg}
       {#if msg.system}
@@ -49,9 +41,9 @@
       {:else}
         <div class="message">
           <div class="message-header">
-          <span class="username" class:owner={msg.role === 'owner'} class:admin={msg.role === 'admin'}>{msg.username}:</span>
-          <span class="timestamp">{timeAgo(msg.timestamp)}</span>
-        </div>
+            <span class="username" class:owner={msg.role === 'owner'} class:admin={msg.role === 'admin'}>{msg.username}:</span>
+            <span class="timestamp">{timeAgo(msg.timestamp)}</span>
+          </div>
           <span class="text">{msg.text}</span>
         </div>
       {/if}
@@ -59,9 +51,9 @@
   </div>
 
   <div class="input-box">
-    <input 
-      type="text" 
-      placeholder="Type message..." 
+    <input
+      type="text"
+      placeholder="Type message..."
       bind:value={messageText}
       onkeydown={(e) => e.key === 'Enter' && sendMessage()}
     />
@@ -71,9 +63,9 @@
 
 <style>
   .chat {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 8px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     padding: 15px;
     margin: 15px 0;
   }
@@ -82,7 +74,7 @@
     font-size: 12px;
     letter-spacing: 2px;
     margin: 0 0 15px 0;
-    color: #888;
+    color: var(--color-text-muted);
   }
 
   .messages {
@@ -91,12 +83,12 @@
     margin-bottom: 10px;
     padding: 10px;
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
   }
 
   .message {
     margin: 8px 0;
-    color: #d4af37;
+    color: var(--color-text);
   }
 
   .message-header {
@@ -107,7 +99,7 @@
 
   .timestamp {
     font-size: 10px;
-    color: #555;
+    color: var(--color-border-strong);
     margin-left: 8px;
   }
 
@@ -125,12 +117,12 @@
   }
 
   .text {
-    color: #ccc;
+    color: var(--color-text-light);
   }
 
   .system {
     text-align: center;
-    color: #666;
+    color: var(--color-text-dim);
     font-style: italic;
     font-size: 12px;
     margin: 8px 0;
@@ -144,23 +136,23 @@
   input {
     flex: 1;
     padding: 8px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 6px;
-    color: #d4af37;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-family: var(--font-family);
   }
 
   button {
     padding: 8px 16px;
-    background: #d4af37;
-    color: #0a0a0a;
+    background: var(--color-primary);
+    color: var(--color-bg);
     border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    border-radius: var(--radius-sm);
     font-weight: bold;
   }
 
   button:hover {
-    background: #f4d03f;
+    background: var(--color-primary-hover);
   }
 </style>

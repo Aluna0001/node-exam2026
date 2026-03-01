@@ -14,26 +14,26 @@
 
 <style>
   .zodiac-card {
-    background: rgba(212, 175, 55, 0.05);
-    border: 2px solid #333;
-    border-radius: 12px;
+    background: var(--color-primary-faint);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 30px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
-    color: #d4af37;
-    font-family: inherit;
+    color: var(--color-text);
+    font-family: var(--font-family);
     width: 100%;
   }
 
   .zodiac-card:hover {
-    border-color: #d4af37;
+    border-color: var(--color-primary);
     transform: translateY(-5px);
   }
 
   .zodiac-card.user-sign {
-    border-color: #d4af37;
-    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
   }
 
   .symbol {
@@ -42,12 +42,12 @@
   }
 
   h3 {
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 10px;
   }
 
   .dates {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 14px;
   }
 </style>

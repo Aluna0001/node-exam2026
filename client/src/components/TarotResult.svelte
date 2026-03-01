@@ -1,6 +1,5 @@
 <script>
   const { card, interpretation, onDrawAnother } = $props()
-
   const API_URL = import.meta.env.VITE_API_URL
 </script>
 
@@ -31,12 +30,12 @@
     text-align: center;
     font-size: 32px;
     margin-bottom: 10px;
-    color: #d4af37;
+    color: var(--color-text);
   }
 
   .base-meaning {
     text-align: center;
-    color: #888;
+    color: var(--color-text-muted);
     font-style: italic;
     margin-bottom: 30px;
   }
@@ -53,21 +52,21 @@
     width: 200px;
     height: 320px;
     object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   .interpretation {
     width: 100%;
     max-width: 700px;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid #333;
-    border-radius: 12px;
+    background: var(--color-primary-faint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 30px;
   }
 
   .interpretation h3 {
-    color: #d4af37;
+    color: var(--color-text);
     margin-top: 0;
     margin-bottom: 15px;
   }
@@ -75,22 +74,21 @@
   .interpretation p {
     line-height: 1.8;
     text-align: left;
-    color: #d4af37;
+    color: var(--color-text);
   }
 
   .draw-again {
     display: block;
     margin: 20px auto 0;
     padding: 15px 30px;
-    background: #d4af37;
-    color: #0a0a0a;
+    background: var(--color-primary);
+    color: var(--color-bg);
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: var(--radius-md);
     font-weight: bold;
   }
 
   .draw-again:hover {
-    background: #f4d03f;
+    background: var(--color-primary-hover);
   }
 </style>

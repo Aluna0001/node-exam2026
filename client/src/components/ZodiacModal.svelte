@@ -57,9 +57,9 @@
   }
 
   .modal {
-    background: #1a1a1a;
-    border: 2px solid #d4af37;
-    border-radius: 12px;
+    background: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
     padding: 40px;
     max-width: 500px;
     width: 90%;
@@ -73,7 +73,7 @@
     right: 15px;
     background: transparent;
     border: none;
-    color: #d4af37;
+    color: var(--color-text);
     font-size: 32px;
     cursor: pointer;
     line-height: 1;
@@ -83,7 +83,7 @@
   }
 
   .close-btn:hover {
-    color: #f4d03f;
+    color: var(--color-primary-hover);
   }
 
   .modal-header {
@@ -97,23 +97,23 @@
   }
 
   .modal h2 {
-    color: #d4af37;
+    color: var(--color-text);
     font-size: 32px;
     margin-bottom: 10px;
   }
 
   .modal-dates {
-    color: #888;
+    color: var(--color-text-muted);
     margin-bottom: 10px;
   }
 
   .element {
-    color: #d4af37;
+    color: var(--color-text);
     font-style: italic;
   }
 
   .modal-body {
-    color: #ccc;
+    color: var(--color-text-light);
   }
 
   .description {
@@ -122,11 +122,11 @@
   }
 
   .traits h4 {
-    color: #d4af37;
+    color: var(--color-text);
     margin-bottom: 10px;
   }
 
   .traits p {
-    color: #888;
+    color: var(--color-text-muted);
   }
 </style>
