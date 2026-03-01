@@ -12,6 +12,7 @@
   let confirmPassword = $state('')
   let birthdate = $state(user?.birthdate || '')
   let showZodiac = $state(user?.show_zodiac === 1)
+  let bio = $state(user?.bio || '')
   let loading = $state(false)
 
   async function handleSave() {
@@ -32,7 +33,7 @@
 
     loading = true
 
-    const result = await updateProfile(currentPassword, newPassword, birthdate, showZodiac)
+    const result = await updateProfile(currentPassword, newPassword, birthdate, showZodiac, bio)
 
     if (result.error) {
       toastr.error(result.error)
@@ -89,6 +90,17 @@
     <label class="form-group">
       <span>Birthdate</span>
       <input type="date" bind:value={birthdate} />
+    </label>
+
+    <label class="form-group">
+      <span>Bio</span>
+      <textarea
+        bind:value={bio}
+        placeholder="Write a little about yourself..."
+        rows="4"
+        maxlength="200"
+      ></textarea>
+      <span class="char-count">{bio.length} / 200</span>
     </label>
 
     <div class="toggle-group">
@@ -160,7 +172,8 @@
   input[type="text"],
   input[type="email"],
   input[type="password"],
-  input[type="date"] {
+  input[type="date"],
+  textarea {
     width: 100%;
     padding: 12px;
     background: var(--color-primary-faint);
@@ -169,6 +182,18 @@
     color: var(--color-text);
     font-size: 16px;
     font-family: var(--font-family);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .char-count {
+    font-size: 12px;
+    color: var(--color-text-dim);
+    text-align: right;
+    margin-top: 4px;
   }
 
   input:disabled {

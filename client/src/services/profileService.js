@@ -6,6 +6,7 @@ export async function updateProfile(
   newPassword,
   birthdate,
   showZodiac,
+  bio,
 ) {
   const response = await fetchRequestJson(
     "/profile/update",
@@ -14,6 +15,7 @@ export async function updateProfile(
       newPassword,
       birthdate,
       showZodiac,
+      bio,
     },
     "PUT",
   );

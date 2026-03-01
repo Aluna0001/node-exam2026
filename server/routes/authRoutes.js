@@ -19,7 +19,6 @@ router.post("/auth/login", async (req, res) => {
       "SELECT * FROM users WHERE username = ?",
       username,
     );
-    console.log(user);
 
     if (!user) {
       return res.status(401).send({ error: "Invalid username or password" });
@@ -50,6 +49,7 @@ router.post("/auth/login", async (req, res) => {
         birthdate: user.birthdate,
         show_zodiac: user.show_zodiac,
         zodiacSign: zodiacSign,
+        bio: user.bio || null,
       },
     });
   } catch (error) {
@@ -93,6 +93,7 @@ router.get("/auth/status", async (req, res) => {
         birthdate: user.birthdate,
         show_zodiac: user.show_zodiac,
         zodiacSign: zodiacSign,
+        bio: user.bio || null,
       },
     });
   } catch (error) {

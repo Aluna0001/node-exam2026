@@ -7,7 +7,7 @@ import { getZodiacSign } from "../utils/zodiacUtils.js";
 const router = express.Router();
 
 router.put("/profile/update", isAuthenticated, async (req, res) => {
-  const { currentPassword, newPassword, birthdate, showZodiac } = req.body;
+  const { currentPassword, newPassword, birthdate, showZodiac, bio } = req.body;
   const userId = req.session.userId;
 
   try {
@@ -26,18 +26,18 @@ router.put("/profile/update", isAuthenticated, async (req, res) => {
       const hashedPassword = await passwordUtils.hashPassword(newPassword);
 
       await db.run(
-        "UPDATE users SET password = ?, birthdate = ?, show_zodiac = ? WHERE id = ?",
-        [hashedPassword, birthdate, showZodiac ? 1 : 0, userId],
+        "UPDATE users SET password = ?, birthdate = ?, show_zodiac = ?, bio = ? WHERE id = ?",
+        [hashedPassword, birthdate, showZodiac ? 1 : 0, bio || null, userId],
       );
     } else {
       await db.run(
-        "UPDATE users SET birthdate = ?, show_zodiac = ? WHERE id = ?",
-        [birthdate, showZodiac ? 1 : 0, userId],
+        "UPDATE users SET birthdate = ?, show_zodiac = ?, bio = ? WHERE id = ?",
+        [birthdate, showZodiac ? 1 : 0, bio || null, userId],
       );
     }
 
     const updatedUser = await db.get(
-      "SELECT id, username, email, role, birthdate, show_zodiac FROM users WHERE id = ?",
+      "SELECT id, username, email, role, birthdate, show_zodiac, bio FROM users WHERE id = ?",
       [userId],
     );
 
@@ -59,11 +59,8 @@ router.delete("/profile/delete", isAuthenticated, async (req, res) => {
 
   try {
     await db.run("DELETE FROM readings WHERE user_id = ?", [userId]);
-
     await db.run("DELETE FROM users WHERE id = ?", [userId]);
-
     req.session.destroy();
-
     res.send({ message: "Account deleted successfully" });
   } catch (error) {
     console.error("Delete account error:", error);

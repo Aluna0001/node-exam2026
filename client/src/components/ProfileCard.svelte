@@ -4,12 +4,21 @@
   import { get } from 'svelte/store'
 
   const { navigate } = getContext('navigation')
-  const user = $derived(get(account))
+  let user = $state(get(account))
+
+  account.subscribe(value => {
+    user = value
+  })
 </script>
 
 <div class="profile-card">
   <p class="username">{user?.username}</p>
   <p class="role">{user?.role}</p>
+
+  {#if user?.bio}
+    <p class="bio">{user.bio}</p>
+  {/if}
+
   {#if user?.birthdate}
     <p class="info">Born: {user.birthdate}</p>
     {#if user?.show_zodiac && user?.zodiacSign}
@@ -46,6 +55,16 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 10px;
+  }
+
+  .bio {
+    font-size: 13px;
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .info {
