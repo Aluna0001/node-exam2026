@@ -52,7 +52,7 @@ router.post("/auth/login", async (req, res) => {
         bio: user.bio || null,
       },
     });
-  } catch (error) {
+  } catch {
     res.status(500).send({ error: "Login failed" });
   }
 });
@@ -96,7 +96,7 @@ router.get("/auth/status", async (req, res) => {
         bio: user.bio || null,
       },
     });
-  } catch (error) {
+  } catch {
     res.status(500).send({ error: "Could not retrieve session" });
   }
 });

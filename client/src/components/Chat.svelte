@@ -35,7 +35,7 @@
   <h3>MYSTICAL CHAT</h3>
 
   <div class="messages" bind:this={messagesContainer}>
-    {#each messages as msg}
+    {#each messages as msg (msg.timestamp + msg.username)}
       {#if msg.system}
         <p class="system">{msg.text}</p>
       {:else}

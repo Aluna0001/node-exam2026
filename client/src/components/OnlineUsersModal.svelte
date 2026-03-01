@@ -24,7 +24,7 @@
     <p class="count">{users.length} {users.length === 1 ? 'person' : 'people'} online</p>
 
     <div class="user-list">
-      {#each users as user}
+      {#each users as user (user.username)}
         <div class="user">
           <span class="dot"></span>
           <div class="user-info">

@@ -1,4 +1,3 @@
-import toastr from 'toastr'
 import { get } from 'svelte/store'
 import { navigate } from 'svelte-routing'
 import { account } from '../stores/auth.js'

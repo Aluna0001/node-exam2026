@@ -38,7 +38,7 @@
   {/if}
 
   <div class="zodiac-grid">
-    {#each zodiacSigns as zodiac}
+    {#each zodiacSigns as zodiac (zodiac.name)}
       <ZodiacCard
         {zodiac}
         isUserSign={getUserZodiacName() === zodiac.name}

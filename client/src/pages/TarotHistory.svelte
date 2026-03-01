@@ -7,6 +7,11 @@
   let readings = $state([])
   let loading = $state(true)
   let selectedReading = $state(null)
+
+  onMount(async () => {
+    readings = await getReadingHistory()
+    loading = false
+  })
 </script>
 
 <div class="history-page">
@@ -14,21 +19,15 @@
   <p class="subtitle">All the wisdom the cards have shared with you</p>
 
   {#if loading}
-    {#await getReadingHistory() then data}
-      {readings = data, loading = false, ''}
-    {/await}
-  {/if}
-
-  {#if !loading && readings.length === 0}
+    <p class="loading">Loading...</p>
+  {:else if readings.length === 0}
     <div class="empty">
       <div class="icon">🃏</div>
       <p>You haven't drawn any cards yet</p>
     </div>
-  {/if}
-
-  {#if !loading && readings.length > 0}
+  {:else}
     <div class="readings-grid">
-      {#each readings as reading}
+      {#each readings as reading (reading.id)}
         <button class="reading-card" onclick={() => selectedReading = reading}>
           <div class="card-image">
             <img src={`${API_URL}${reading.card_image}`} alt={reading.card_name} />
@@ -36,7 +35,7 @@
           <div class="card-info">
             <h3>{reading.card_name}</h3>
             <p class="question">"{reading.question}"</p>
-            <p class="date">{new Date(reading.created_at).toLocaleDateString()}</p>
+            <p class="date">{new Date(reading.created_at).toLocaleDateString('da-DK', { timeZone: 'Europe/Copenhagen' })}</p>
           </div>
         </button>
       {/each}
@@ -67,7 +66,7 @@
         <img src={`${API_URL}${selectedReading.card_image}`} alt={selectedReading.card_name} />
         <div>
           <h2>{selectedReading.card_name}</h2>
-          <p class="modal-date">{new Date(selectedReading.created_at).toLocaleString()}</p>
+          <p class="modal-date">{new Date(selectedReading.created_at).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })}</p>
         </div>
       </div>
 
@@ -102,6 +101,12 @@
     text-align: center;
     color: var(--color-text-muted);
     margin-bottom: 40px;
+  }
+
+  .loading {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 18px;
   }
 
   .empty {
