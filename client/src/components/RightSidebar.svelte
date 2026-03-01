@@ -1,39 +1,46 @@
 <script>
   import { account } from '../stores/auth.js'
   import { getContext } from 'svelte'
+  import { get } from 'svelte/store'
   import Chat from './Chat.svelte'
   import LatestReadingCard from './LatestReadingCard.svelte'
 
   const { navigate } = getContext('navigation')
+
+  const user = $derived(get(account))
 </script>
 
 <aside class="right-sidebar">
   <h3>YOUR PROFILE</h3>
   <div class="profile-card">
-  <p class="username">{$account.username}</p>
-  <p class="role">{$account.role}</p>
-  {#if $account.birthdate}
-    <p class="info">Born: {$account.birthdate}</p>
-    {#if $account.show_zodiac && $account.zodiacSign}
-      <p class="zodiac">{$account.zodiacSign}</p>
+    <p class="username">{user?.username}</p>
+    <p class="role">{user?.role}</p>
+    {#if user?.birthdate}
+      <p class="info">Born: {user.birthdate}</p>
+      {#if user?.show_zodiac && user?.zodiacSign}
+        <p class="zodiac">{user.zodiacSign}</p>
+      {/if}
+    {:else}
+      <p class="info">Birthdate: Not set</p>
     {/if}
-  {:else}
-    <p class="info">Birthdate: Not set</p>
-  {/if}
-  
-  <button class="edit-btn" onclick={() => navigate('profile-settings')}>
-    Edit Profile
-  </button>
-</div>
+
+    <button class="edit-btn" onclick={() => navigate('profile-settings')}>
+      Edit Profile
+    </button>
+  </div>
 
   <Chat />
 
   <h3>LATEST READING</h3>
   <LatestReadingCard />
-
 </aside>
 
 <style>
+  .right-sidebar {
+    position: sticky;
+    top: 20px;
+  }
+
   .right-sidebar h3 {
     font-size: 12px;
     letter-spacing: 2px;
@@ -71,25 +78,25 @@
   }
 
   .edit-btn {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  background: transparent;
-  border: 1px solid #d4af37;
-  color: #d4af37;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
 
-.edit-btn:hover {
-  background: rgba(212, 175, 55, 0.1);
-}
+  .edit-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+  }
 
-.zodiac {
-  font-size: 18px;
-  color: #d4af37;
-  margin: 10px 0;
-  text-align: center;
-}
+  .zodiac {
+    font-size: 18px;
+    color: #d4af37;
+    margin: 10px 0;
+    text-align: center;
+  }
 </style>

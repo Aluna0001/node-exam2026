@@ -349,4 +349,10 @@
   .traits p {
     color: #888;
   }
+
+  .zodiac-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
 </style>

@@ -1,9 +1,9 @@
 <script>
-  import { logout } from '../services/authService.js'
   import { setContext } from 'svelte'
+  import Header from '../components/Header.svelte'
+  import RightSidebar from '../components/RightSidebar.svelte'
   import TarotPage from './TarotPage.svelte'
   import ReadingDetail from './ReadingDetail.svelte'
-  import RightSidebar from '../components/RightSidebar.svelte'
   import ProfileSettings from './ProfileSettings.svelte'
   import Zodiac from './Zodiac.svelte'
 
@@ -17,37 +17,44 @@
 </script>
 
 <div class="dashboard">
-  <header class="top-header">
-    <button class="logo" onclick={() => navigate('home')}>✨ Mystical Portal</button>
-    <button class="logout-btn" onclick={logout}>Log out</button>
-  </header>
+  <Header />
 
   <div class="layout">
     <main class="content">
       {#if currentPage === 'home'}
-        <h1>Welcome to The Mystical Portal</h1>
-        <p>Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
+        <div class="page-content">
+          <h1>Welcome to The Mystical Portal</h1>
+          <p class="intro">Open the door to the universe's secrets. Here you can explore tarot, astrology, and palmistry to discover your true path.</p>
 
-        <div class="cards">
-          <button class="card" onclick={() => navigate('tarot')}>
-            <div class="icon">⭐</div>
-            <h3>Tarot</h3>
-            <p>Let the cards show the way</p>
-          </button>
-          <button class="card" onclick={() => navigate('zodiac')}>
-            <div class="icon">🌙</div>
-            <h3>Zodiac</h3>
-            <p>Experience cosmic wisdom</p>
-          </button>
+          <div class="cards">
+            <button class="card" onclick={() => navigate('tarot')}>
+              <div class="icon">⭐</div>
+              <h3>Tarot</h3>
+              <p>Let the cards show the way</p>
+            </button>
+            <button class="card" onclick={() => navigate('zodiac')}>
+              <div class="icon">🌙</div>
+              <h3>Zodiac</h3>
+              <p>Experience cosmic wisdom</p>
+            </button>
+          </div>
         </div>
       {:else if currentPage === 'tarot'}
-        <TarotPage />
+        <div class="page-content">
+          <TarotPage />
+        </div>
       {:else if currentPage === 'reading'}
-        <ReadingDetail />
+        <div class="page-content">
+          <ReadingDetail />
+        </div>
       {:else if currentPage === 'profile-settings'}
-        <ProfileSettings />
+        <div class="page-content">
+          <ProfileSettings />
+        </div>
       {:else if currentPage === 'zodiac'}
-        <Zodiac />
+        <div class="page-content">
+          <Zodiac />
+        </div>
       {/if}
     </main>
 
@@ -63,43 +70,6 @@
     font-family: system-ui, -apple-system, sans-serif;
   }
 
-  .top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    border-bottom: 1px solid #333;
-  }
-
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    background: none;
-    border: none;
-    color: #d4af37;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .logo:hover {
-    opacity: 0.8;
-  }
-
-  .logout-btn {
-    padding: 10px 20px;
-    background: transparent;
-    color: #d4af37;
-    border: 1px solid #d4af37;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .logout-btn:hover {
-    background: #d4af37;
-    color: #0a0a0a;
-  }
-
   .layout {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -107,19 +77,24 @@
     padding: 20px;
     max-width: 1600px;
     margin: 0 auto;
+    align-items: start;
   }
 
   .content {
+    min-height: calc(100vh - 80px);
+  }
+
+  .page-content {
     padding: 20px;
   }
 
-  .content h1 {
+  h1 {
     font-size: 36px;
     text-align: center;
     margin-bottom: 15px;
   }
 
-  .content > p {
+  .intro {
     text-align: center;
     color: #888;
     max-width: 600px;
