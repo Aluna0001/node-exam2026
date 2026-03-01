@@ -1,6 +1,6 @@
 export function timeAgo(timestamp) {
   const now = new Date();
-  const then = new Date(timestamp);
+  const then = new Date(timestamp + "Z");
   const seconds = Math.floor((now.getTime() - then.getTime()) / 1000);
 
   if (seconds < 60) return "just now";

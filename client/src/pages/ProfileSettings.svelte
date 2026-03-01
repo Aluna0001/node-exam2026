@@ -75,7 +75,7 @@
 
     <label class="form-group">
       <span>New Password</span>
-      <input type="password" bind:value={newPassword} placeholder="Leave empty to keep current" />
+      <input type="password" bind:value={newPassword} />
     </label>
 
     <label class="form-group">

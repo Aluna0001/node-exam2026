@@ -15,8 +15,8 @@
   }
 </script>
 
-<div class="danger-zone">
-  <h3>Danger Zone</h3>
+<div class="delete-section">
+  <h3>Delete Account</h3>
   <p>Once you delete your account, there is no going back.</p>
 
   {#if !showDeleteConfirm}
@@ -24,9 +24,9 @@
       Delete Account
     </button>
   {:else}
-    <p class="confirm-text">Are you sure? This cannot be undone!</p>
+    <p class="confirm-text">Are you sure? This cannot be undone.</p>
     <div class="confirm-buttons">
-      <button class="delete-confirm-btn" onclick={handleDeleteAccount}>
+      <button class="confirm-btn" onclick={handleDeleteAccount}>
         Yes, Delete My Account
       </button>
       <button class="cancel-btn" onclick={() => showDeleteConfirm = false}>
@@ -37,21 +37,21 @@
 </div>
 
 <style>
-  .danger-zone {
+  .delete-section {
     margin-top: 40px;
     padding: 30px;
-    border: 2px solid var(--color-danger);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-danger-soft);
+    background: var(--color-primary-faint);
   }
 
-  .danger-zone h3 {
-    color: var(--color-danger);
+  .delete-section h3 {
+    color: var(--color-text);
     margin-top: 0;
     margin-bottom: 10px;
   }
 
-  .danger-zone p {
+  .delete-section p {
     color: var(--color-text-muted);
     margin-bottom: 20px;
   }
@@ -60,19 +60,18 @@
     width: 100%;
     padding: 15px;
     background: transparent;
-    border: 2px solid var(--color-danger);
-    color: var(--color-danger);
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
     border-radius: var(--radius-md);
     font-weight: bold;
   }
 
   .delete-btn:hover {
-    background: var(--color-danger-soft-hover);
+    background: var(--color-primary-soft);
   }
 
   .confirm-text {
-    color: var(--color-danger);
-    font-weight: bold;
+    color: var(--color-text-muted);
     margin-bottom: 15px;
   }
 
@@ -81,30 +80,30 @@
     gap: 10px;
   }
 
-  .delete-confirm-btn {
+  .confirm-btn {
     flex: 1;
     padding: 15px;
-    background: var(--color-danger);
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-bg);
     border: none;
     border-radius: var(--radius-md);
     font-weight: bold;
   }
 
-  .delete-confirm-btn:hover {
-    background: var(--color-danger-hover);
+  .confirm-btn:hover {
+    background: var(--color-primary-hover);
   }
 
   .cancel-btn {
     flex: 1;
     padding: 15px;
-    background: var(--color-border-strong);
-    color: white;
-    border: none;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
     border-radius: var(--radius-md);
   }
 
   .cancel-btn:hover {
-    background: #777;
+    background: var(--color-primary-soft);
   }
 </style>

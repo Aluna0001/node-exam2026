@@ -33,7 +33,7 @@
       <p>{reading.interpretation}</p>
     </div>
 
-    <p class="date">Read on {new Date(reading.created_at).toLocaleString()}</p>
+    <p class="date">Read on {new Date(reading.created_at).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })}</p>
   {:else}
     <p class="no-reading">No reading found</p>
   {/if}
