@@ -46,11 +46,9 @@ app.all("/{*splat}", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
-const PORT = Number(process.env.PORT) || 8080;
+const server = createServer(app);
 
-const httpServer = createServer(app);
-
-const io = new Server(httpServer, {
+const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
     credentials: true,
@@ -112,6 +110,5 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log("Server is running on port:", PORT);
-});
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => console.log("Server running on port", PORT));
