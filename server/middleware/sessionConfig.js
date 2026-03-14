@@ -1,4 +1,5 @@
-import session from 'express-session'
+import "dotenv/config";
+import session from 'express-session';
 
 export const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,

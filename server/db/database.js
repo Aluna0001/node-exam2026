@@ -1,6 +1,14 @@
-import "dotenv/config";
+import { fileURLToPath } from 'url'
+import path from 'path'
+import dotenv from 'dotenv'
 import db from "./connection.js";
 import passwordUtils from "../utils/passwordUtils.js";
+
+// Load .env from server directory
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const serverDir = path.dirname(__dirname)
+dotenv.config({ path: path.join(serverDir, '.env') })
 
 db.exec(`
     CREATE TABLE IF NOT EXISTS users (
