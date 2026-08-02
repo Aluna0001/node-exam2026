@@ -2,6 +2,7 @@ import express from "express";
 import db from "../db/connection.js";
 import { interpretTarotCard } from "../services/aiService.js";
 import { isAuthenticated } from "../middleware/authMiddleware.js";
+const DAILY_LIMIT = Number(process.env.DAILY_LIMIT ?? 10);
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ router.post("/tarot/draw", isAuthenticated, async (req, res) => {
       [userId],
     );
 
-    if (count.count >= 2) {
+    if (count.count >= DAILY_LIMIT) {
       return res.status(429).send({
         error: "Daily limit reached",
         limitReached: true,
@@ -118,7 +119,7 @@ router.get("/tarot/check-limit", isAuthenticated, async (req, res) => {
     );
 
     res.send({
-      limitReached: count.count >= 2,
+      limitReached: count.count >= DAILY_LIMIT,
       count: count.count,
       resetTime: getNextMidnight(),
     });
